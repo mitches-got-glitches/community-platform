@@ -79,7 +79,16 @@ consumed by these hidden costs. If Matrix/bridge becomes a real need, treat it a
   steady state.
 
 ## Verify before building
-- Confirm **arm64 images** exist for every AIO add-on you enable (Collabora, Talk HPB,
-  recording). If a critical one is x86-only, fall back to Hetzner CPX31 (x86) — see [0005].
-- Confirm current **Proton Pass free-tier vault-sharing limits**; a low-cost paid plan is
-  fine within budget — see [0007].
+Both pre-build checks were completed on **2026-06-30** — both clear; the ARM plan and the
+budget hold. Details in the ADRs ([0005], [0007]) and `docs/risks.md`.
+- ✅ **arm64 images confirmed for every enabled AIO add-on** — `aio-nextcloud`, `aio-apache`,
+  `aio-collabora`, `aio-talk` (HPB/signaling), `aio-talk-recording`, `aio-imaginary`,
+  `aio-fulltextsearch`, `aio-clamav`, `aio-whiteboard` all publish multi-arch `latest`
+  (amd64 **+ arm64**) on Docker Hub. The historic gap — Talk **recording** was x86-only on
+  arm64 (Selenium) — was fixed upstream in 2025; arm64 `aio-talk-recording` images now ship.
+  **No fallback to CPX31 needed.** Recording stays the add-on to re-check if a regression
+  appears — see [0005].
+- ✅ **Proton Pass free-tier sharing limits confirmed — free tier is NOT enough.** Free =
+  2 shared vaults, **max 3 people per vault**, and **at most 2 Proton Free users per vault**;
+  so two free admins are already at the ceiling and can't add a third. Budget **Pass Plus
+  (~£24/yr)** for the vault owner (admin) — within budget, matches the [0007] line — see [0007].

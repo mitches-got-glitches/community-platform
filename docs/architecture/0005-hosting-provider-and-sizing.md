@@ -60,8 +60,15 @@ See `../risks.md` (risks R-08, R-10) for the consolidated cost picture. The real
 VAT-inclusive run-rate for the whole stack is ~£230–280/yr, not ~£160–180.
 
 ## Conditions / follow-ups
-- **Before committing:** verify arm64 images exist for every enabled AIO add-on (Collabora,
-  Talk HPB, recording). If a critical one is x86-only, fall back to CPX31.
+- ✅ **arm64 images verified (2026-06-30).** Every enabled AIO add-on publishes a multi-arch
+  `latest` (amd64 + arm64) on Docker Hub: `aio-nextcloud`, `aio-apache`, `aio-collabora`,
+  `aio-talk` (HPB/signaling), `aio-talk-recording`, `aio-imaginary`, `aio-fulltextsearch`,
+  `aio-clamav`, `aio-whiteboard`. The one historic gap — `aio-talk-recording` was x86-only on
+  aarch64 because Selenium lacked arm64 drivers ([AIO issue #5973](https://github.com/nextcloud/all-in-one/issues/5973),
+  [discussion #6262](https://github.com/nextcloud/all-in-one/discussions/6262)) — was
+  fixed upstream in 2025; arm64 recording images now ship. **CAX31 (ARM) confirmed; the CPX31
+  fallback is not required.** Recording remains the most fragile add-on on ARM — re-check it
+  first if a future AIO release regresses; the x86 fallback stands if so.
 - Sizing assumes Talk-only (no Matrix). Adding Matrix + bridge + an IdP later would push
   RAM use up and is part of why those are deferred — see [0002], [0004].
 - Monitor file-store usage; set an alert before the box disk fills.

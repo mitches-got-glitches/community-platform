@@ -48,7 +48,14 @@ org's anti-big-tech, sovereignty-first ethos.
 - **Launch blocker:** populate the vault with VPS root, registrar, and Borg key *before*
   any production data — credentials must survive the admin even before a second admin
   exists (see [0009](0009-bus-factor-and-second-admin.md)).
-- Verify current Proton Pass free-tier vault-sharing limits; upgrade to a paid plan if a
-  shared infra vault requires it. **Budget ~£24–50/yr for this** — the free tier's
-  *sharing* limits likely require Pass Plus (~£2/mo) or Pass for Business (~£2–4/user/mo).
-  This is a hidden cost the original plan treated as £0; see `../risks.md` (risk R-08).
+- ✅ **Free-tier sharing limits verified (2026-06-30) — paid plan needed.** Per Proton's own
+  docs ([share via extension](https://proton.me/support/pass-browser-share),
+  [share on Android](https://proton.me/support/pass-android-share)), **Proton Pass Free** allows
+  **2 shared vaults, max 3 people per vault** (including you), and — the binding limit — **at
+  most 2 Proton Free users per shared vault**. Any **paid** plan raises this to 50 vaults /
+  10 people per vault. Our one infra vault for two *free* admins fits the 3-person cap today,
+  but is at the free-user ceiling: a third holder (e.g. a committee backup) is impossible
+  until the **vault owner** upgrades. **Decision: put the admin (vault owner) on Pass Plus
+  (~£2/mo ≈ £24/yr)** — cheapest acceptable option, removes the headcount cliff, sits at the
+  bottom of the budgeted range. This is a hidden cost the original plan treated as £0; budget
+  ~£24/yr (not £0); see `../risks.md` (risk R-08).
