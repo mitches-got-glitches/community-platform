@@ -1,6 +1,12 @@
+> [!IMPORTANT]
+> **ARCHIVED (2026-07-05).** This backlog has been migrated to GitHub Issues and is no
+> longer maintained. The **source of truth is now [Project #2 "Community Platform Build"](https://github.com/users/mitches-got-glitches/projects/2)**
+> and the issues under [`mitches-got-glitches/community-platform`](https://github.com/mitches-got-glitches/community-platform/issues).
+> Edit the issues directly — do not update this file. Kept for historical reference only.
+
 # Project backlog — Community Org Collaboration Stack
 
-Build/launch backlog for the stack decided in [`docs/architecture/`](architecture/).
+Build/launch backlog for the stack decided in [`docs/architecture/`](../architecture/).
 Structured so it can migrate to **GitHub Issues + Projects** with minimal rework.
 
 ## How this maps to GitHub Projects
