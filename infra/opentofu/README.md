@@ -30,6 +30,23 @@ tofu plan
 tofu apply
 ```
 
+### Sourcing `HCLOUD_TOKEN` from Proton Pass
+
+The token should live only in the vault (SEC-2), not in shell history or a dotfile. The
+[Proton Pass CLI](https://protonpass.github.io/pass-cli/) (`pass-cli`, included in Pass
+Plus — see [ADR-0007](../../docs/architecture/0007-secrets-management.md)) resolves a
+`pass://vault/item/field` reference and injects it into a child process's environment,
+so the plaintext token never touches disk or your shell:
+
+```sh
+curl -fsSL https://proton.me/download/pass-cli/install.sh | bash
+pass-cli login
+pass-cli list   # find the exact vault/item path you saved the token under
+
+HCLOUD_TOKEN="pass://<vault-name>/<item-name>/<field>" \
+  pass-cli run -- tofu -chdir=infra/opentofu apply
+```
+
 On success:
 
 ```sh
