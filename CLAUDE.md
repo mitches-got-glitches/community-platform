@@ -43,6 +43,7 @@ container wiring and safe upgrades). Reverse proxy: **Caddy** (automatic TLS).
 | Secrets | **Proton Pass** shared vault, off the infrastructure it protects | [0007](docs/architecture/0007-secrets-management.md) |
 | Operational baseline | EU SMTP relay, Healthchecks + uptime monitor, host hardening | [0008](docs/architecture/0008-operational-baseline.md) |
 | Bus factor | Launch solo; **2nd admin onboarded ≤3 months**; launch blockers below | [0009](docs/architecture/0009-bus-factor-and-second-admin.md) |
+| VPS provisioning | **OpenTofu** (`hcloud` provider) creates the server/SSH key/firewall; Ansible takes over from there | [0010](docs/architecture/0010-vps-provisioning-via-opentofu.md) |
 
 ## Cost summary (realistic, VAT-inclusive)
 | Item | £/yr | Note |
