@@ -93,3 +93,9 @@ budget hold. Details in the ADRs ([0005], [0007]) and `docs/risks.md`.
   2 shared vaults, **max 3 people per vault**, and **at most 2 Proton Free users per vault**;
   so two free admins are already at the ceiling and can't add a third. Budget **Pass Plus
   (~£24/yr)** for the vault owner (admin) — within budget, matches the [0007] line — see [0007].
+
+## Documentation & contributing
+- Docs follow **Diátaxis** (tutorial / how-to / reference / explanation) — see
+  `docs/README.md` for the map and where new docs should go.
+- Commits follow **atomic commits + Conventional Commits** — see
+  `docs/guides/commit-conventions.md`; the `/commit` skill applies this automatically.
