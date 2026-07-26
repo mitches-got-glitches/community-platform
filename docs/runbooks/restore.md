@@ -58,6 +58,9 @@ From the **Proton Pass vault** (see the [secrets ADR](../architecture/0007-secre
 - **Hetzner Cloud** login — to create the replacement VPS.
 - **Domain registrar** login — to re-point DNS at the new box.
 - **SMTP relay** + **Healthchecks.io** credentials — to restore outbound mail and re-arm alerting.
+- **Migadu** login — not needed to rebuild the VPS itself (mailboxes live off-box and are
+  unaffected by a VPS disaster, see [ADR-0011](../architecture/0011-custom-domain-email-via-migadu.md)),
+  but keep it in the same vault entry group in case the domain's DNS needs re-verifying.
 
 Also have:
 
