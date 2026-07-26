@@ -1,8 +1,7 @@
 # Copy to terraform.tfvars and fill in — terraform.tfvars is gitignored.
-# Do NOT put hcloud_token here; pass it via the HCLOUD_TOKEN env var instead
-# (see README.md). It is listed as `sensitive` in variables.tf to stop it
-# leaking into `tofu plan`/`apply` console output, but Terraform vars files
-# are still plaintext on disk, so keep secrets out of this file entirely.
+# Do NOT put the Hetzner API token here; pass it via the HCLOUD_TOKEN env var
+# instead (see README.md). Terraform vars files are plaintext on disk, so keep
+# secrets out of this file entirely.
 
 server_name = "community-platform"
 server_type = "cax31"
