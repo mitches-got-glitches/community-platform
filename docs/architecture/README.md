@@ -20,9 +20,12 @@ Consequences → Conditions/Follow-ups**. Status is one of `Proposed`, `Accepted
 | [0007](0007-secrets-management.md) | Secrets: Proton Pass shared vault | Accepted |
 | [0008](0008-operational-baseline.md) | Operational baseline: SMTP, monitoring, host hardening | Accepted |
 | [0009](0009-bus-factor-and-second-admin.md) | Bus-factor mitigation and second-admin policy | Accepted |
-| [0010](0010-diy-vs-managed-nextcloud.md) | DIY vs Managed Nextcloud (reconsidering archetype C) | Proposed |
+| [0010](0010-vps-provisioning-via-opentofu.md) | VPS provisioning via OpenTofu | Accepted |
+| [0011](0011-custom-domain-email-via-migadu.md) | Custom-domain email via Migadu | Accepted |
+| [0012](0012-diy-vs-managed-nextcloud.md) | DIY vs Managed Nextcloud (reconsidering archetype C) | Proposed |
 
-All decisions dated **2026-06-18**. Decider: the org's technical admin.
+Most decisions dated **2026-06-18**; later ADRs carry their own date. Decider: the org's
+technical admin.
 
 > Cross-cutting theme: **bus factor is currently 1.** Almost every decision below
 > trades raw capability or cost for operability and recoverability by a single
