@@ -53,9 +53,15 @@ org's anti-big-tech, sovereignty-first ethos.
   [share on Android](https://proton.me/support/pass-android-share)), **Proton Pass Free** allows
   **2 shared vaults, max 3 people per vault** (including you), and — the binding limit — **at
   most 2 Proton Free users per shared vault**. Any **paid** plan raises this to 50 vaults /
-  10 people per vault. Our one infra vault for two *free* admins fits the 3-person cap today,
-  but is at the free-user ceiling: a third holder (e.g. a committee backup) is impossible
-  until the **vault owner** upgrades. **Decision: put the admin (vault owner) on Pass Plus
-  (~£2/mo ≈ £24/yr)** — cheapest acceptable option, removes the headcount cliff, sits at the
-  bottom of the budgeted range. This is a hidden cost the original plan treated as £0; budget
-  ~£24/yr (not £0); see `../risks.md` (risk R-08).
+  10 people per vault.
+- ✅ **Implemented (2026-07-26): Pass Family, on a dedicated new Proton account, not a
+  personal one.** Superseded the original "admin's account on Pass Plus" plan for two
+  reasons: (1) Proton doesn't allow stacking two separate paid "Plus" products on one
+  account, and the admin's personal account already carries Mail Plus; (2) tying the org's
+  vault subscription to a personal account couples org continuity to that person's own
+  billing/identity — the wrong shape for something that must survive the admin. Pass Family
+  (~£38–47/yr, up to 6 seats) also beats a solo Pass Plus/Unlimited upgrade on both cost and
+  headroom for a future committee backup. The vault itself is named **BAFZ Vault**; see the
+  [Pass Family admin-onboarding runbook](../runbooks/pass-family-admin-onboarding.md) for
+  adding/removing members. Update the cost summary in `CLAUDE.md` and `../risks.md`
+  (risk R-08) to reflect Pass Family's price, not the earlier Pass Plus figure.
