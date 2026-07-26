@@ -99,3 +99,6 @@ budget hold. Details in the ADRs ([0005], [0007]) and `docs/risks.md`.
   `docs/README.md` for the map and where new docs should go.
 - Commits follow **atomic commits + Conventional Commits** — see
   `docs/guides/commit-conventions.md`; the `/commit` skill applies this automatically.
+- When a task involves multiple distinct fixes, commit each one immediately after making
+  it rather than batching edits and splitting them out afterward — cheaper (no need to
+  reconstruct intermediate file states after the fact) and keeps history construction simple.
