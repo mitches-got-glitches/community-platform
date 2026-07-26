@@ -17,3 +17,11 @@ tofu-apply:
 vault-members:
     pass-cli vault list
     pass-cli item list --vault-name "{{vault_name}}"
+
+# Dry-run the Ansible playbook against the production inventory (see ansible/README.md)
+ansible-check:
+    cd ansible && uv run ansible-playbook site.yml --check
+
+# Apply the Ansible playbook against the production inventory (see ansible/README.md)
+ansible-apply:
+    cd ansible && uv run ansible-playbook site.yml
