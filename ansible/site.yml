@@ -1,0 +1,9 @@
+---
+- name: Configure the Nextcloud AIO host
+  hosts: all
+  become: true
+  roles:
+    - common
+    - docker
+    - caddy
+    - nextcloud_aio
