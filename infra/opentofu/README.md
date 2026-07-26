@@ -72,4 +72,6 @@ the local state file around.
 ## Destroying
 `tofu destroy` deletes the server. This is a genuinely destructive, hard-to-reverse
 action — confirm you have a current, verified backup (BKP-4) before ever running it
-against a production box.
+against a production box. `hcloud_server.this` carries `lifecycle { prevent_destroy = true }`
+as a guardrail against a fat-fingered `destroy`; remove that block locally (don't commit
+the removal) if you genuinely intend to destroy the server.

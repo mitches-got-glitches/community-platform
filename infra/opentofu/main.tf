@@ -40,4 +40,8 @@ resource "hcloud_server" "this" {
     ipv4_enabled = true
     ipv6_enabled = true
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
