@@ -3,17 +3,15 @@
 # snippets in docs.
 
 vault_name := "BAFZ Vault"
-hcloud_token_item := "Hetzner API Key"
+hcloud_token_ref := "pass://" + vault_name + "/Hetzner API Key/password"
 
 # Preview infrastructure changes (see infra/opentofu/README.md)
 tofu-plan:
-    HCLOUD_TOKEN="pass://{{vault_name}}/{{hcloud_token_item}}/password" \
-        pass-cli run -- tofu -chdir=infra/opentofu plan
+    HCLOUD_TOKEN="{{hcloud_token_ref}}" pass-cli run -- tofu -chdir=infra/opentofu plan
 
 # Apply infrastructure changes (see infra/opentofu/README.md) — review the plan first
 tofu-apply:
-    HCLOUD_TOKEN="pass://{{vault_name}}/{{hcloud_token_item}}/password" \
-        pass-cli run -- tofu -chdir=infra/opentofu apply
+    HCLOUD_TOKEN="{{hcloud_token_ref}}" pass-cli run -- tofu -chdir=infra/opentofu apply
 
 # Audit who has vault access and list its items (see docs/runbooks/pass-family-admin-onboarding.md)
 vault-members:
