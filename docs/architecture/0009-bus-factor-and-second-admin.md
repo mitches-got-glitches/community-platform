@@ -62,6 +62,6 @@ trained:
 - Track the 3-month second-admin deadline explicitly. Re-evaluate DIY-vs-managed-ops at
   that checkpoint.
 - **Archetype C (fully managed Nextcloud) is being actively reconsidered** in light of the
-  volunteer-time cost finding — see [ADR-0010](0010-diy-vs-managed-nextcloud.md). It carries
+  volunteer-time cost finding — see [ADR-0012](0012-diy-vs-managed-nextcloud.md). It carries
   the verification checklist that gates any switch and serves as the concrete fallback if
   the second admin (GOV-7) never materialises.

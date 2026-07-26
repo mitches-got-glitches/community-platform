@@ -1,4 +1,4 @@
-# ADR-0010: DIY vs Managed Nextcloud (reconsidering archetype C)
+# ADR-0012: DIY vs Managed Nextcloud (reconsidering archetype C)
 
 - **Status:** Proposed — *pending provider verification (see checklist below)*
 - **Date:** 2026-06-18

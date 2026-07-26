@@ -98,5 +98,5 @@ Use the member onboarding guide (DOC-5). Each user:
 Review against the three questions, then choose:
 - **Proceed** → execute the growth path above (this *is* the start of production).
 - **Adjust** → e.g. if group video is poor, plan HPB/Jitsi (COLLAB-6 / ADR-0003); if
-  adoption stalls, revisit onboarding or the managed-Nextcloud option (ADR-0010).
+  adoption stalls, revisit onboarding or the managed-Nextcloud option (ADR-0012).
 - **Stop** → tear down the box (billing stops); domain + learnings retained.
