@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(grep -cE '^`type:.*`pilot`$' docs/project-backlog.md)",
-      "Bash(grep -B1 -E '^`type:.*`pilot`$' docs/project-backlog.md)"
-    ]
-  }
-}
