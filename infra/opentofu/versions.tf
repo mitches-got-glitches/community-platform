@@ -10,5 +10,7 @@ terraform {
 }
 
 provider "hcloud" {
-  token = var.hcloud_token
+  # Token is read from the HCLOUD_TOKEN environment variable — deliberately not
+  # wired to a Terraform variable, so the provider's built-in env-var lookup
+  # applies (see README.md).
 }

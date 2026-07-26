@@ -1,9 +1,3 @@
-variable "hcloud_token" {
-  description = "Hetzner Cloud API token. Pass via TF_VAR_hcloud_token or HCLOUD_TOKEN env var — never commit it."
-  type        = string
-  sensitive   = true
-}
-
 variable "server_name" {
   description = "Name of the Hetzner Cloud server."
   type        = string
