@@ -1,0 +1,7 @@
+---
+# Placeholder. Will install Caddy and drop the reverse-proxy config that terminates
+# TLS in front of Nextcloud AIO (ADR-0001). Structure only for now — see #12 (INFRA-3)
+# and Epic A (#1).
+- name: Placeholder — caddy role not yet implemented
+  ansible.builtin.debug:
+    msg: "caddy role: nothing to do yet"

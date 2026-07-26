@@ -1,0 +1,15 @@
+---
+# One host for now: the single Hetzner CAX31 box (ADR-0005) provisioned by OpenTofu
+# (../../infra/opentofu, ADR-0010). After `tofu apply`, update ansible_host with the
+# real address:
+#
+#   tofu -chdir=../infra/opentofu output -raw server_ipv4
+#
+all:
+  hosts:
+    community-platform:
+      # Placeholder — 192.0.2.1 is RFC 5737 TEST-NET-1, reserved for documentation.
+      ansible_host: 192.0.2.1
+      ansible_user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
