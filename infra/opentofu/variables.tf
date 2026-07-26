@@ -34,13 +34,11 @@ variable "ssh_public_key_path" {
 }
 
 variable "admin_ipv4_cidrs" {
-  description = "IPv4 CIDR blocks allowed to reach SSH (port 22). Restrict to the admin's known IP(s)/VPN range where possible; defaults to open (0.0.0.0/0) if unset."
+  description = "IPv4 CIDR blocks allowed to reach SSH (port 22). Required — no open default, so a plan/apply forces an explicit choice instead of silently exposing SSH to the internet. Set to [] if not restricting over IPv4."
   type        = list(string)
-  default     = ["0.0.0.0/0"]
 }
 
 variable "admin_ipv6_cidrs" {
-  description = "IPv6 CIDR blocks allowed to reach SSH (port 22)."
+  description = "IPv6 CIDR blocks allowed to reach SSH (port 22). Required — no open default; see admin_ipv4_cidrs. Set to [] if not restricting over IPv6."
   type        = list(string)
-  default     = ["::/0"]
 }

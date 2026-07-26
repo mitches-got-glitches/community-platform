@@ -22,7 +22,13 @@ Ansible's job (ADR-0001), not OpenTofu's.
 ```sh
 cd infra/opentofu
 cp terraform.tfvars.example terraform.tfvars   # edit as needed; this file is gitignored
+```
 
+Set `admin_ipv4_cidrs`/`admin_ipv6_cidrs` in `terraform.tfvars` to your known IP(s) —
+these are required (no open default), so `plan`/`apply` will fail until you've made an
+explicit choice. Use `[]` for whichever family you're not restricting.
+
+```sh
 export HCLOUD_TOKEN="<your Hetzner API token>" # never put this in a .tfvars file
 
 tofu init
