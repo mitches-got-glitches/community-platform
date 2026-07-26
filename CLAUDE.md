@@ -40,10 +40,11 @@ container wiring and safe upgrades). Reverse proxy: **Caddy** (automatic TLS).
 | Identity / SSO | **Deferred** — per-user accounts per service, no SSO yet | [0004](docs/architecture/0004-identity-and-sso.md) |
 | Hosting | **Hetzner CAX31** (8 vCPU ARM / 16 GB / 160 GB, EU), sized for 20–30 | [0005](docs/architecture/0005-hosting-provider-and-sizing.md) |
 | Backups / DR | AIO BorgBackup → **BorgBase** (EU, off-site); prune policy; tested restore | [0006](docs/architecture/0006-backups-and-disaster-recovery.md) |
-| Secrets | **Proton Pass** shared vault, off the infrastructure it protects | [0007](docs/architecture/0007-secrets-management.md) |
+| Secrets | **Proton Pass Family**, dedicated org account ("BAFZ Vault"), off the infrastructure it protects | [0007](docs/architecture/0007-secrets-management.md) |
 | Operational baseline | EU SMTP relay, Healthchecks + uptime monitor, host hardening | [0008](docs/architecture/0008-operational-baseline.md) |
 | Bus factor | Launch solo; **2nd admin onboarded ≤3 months**; launch blockers below | [0009](docs/architecture/0009-bus-factor-and-second-admin.md) |
 | VPS provisioning | **OpenTofu** (`hcloud` provider) creates the server/SSH key/firewall; Ansible takes over from there | [0010](docs/architecture/0010-vps-provisioning-via-opentofu.md) |
+| Email (custom domain) | **Migadu** hosts `@bafz.org` mailboxes; distinct from Nextcloud's own transactional relay | [0011](docs/architecture/0011-custom-domain-email-via-migadu.md) |
 
 ## Cost summary (realistic, VAT-inclusive)
 | Item | £/yr | Note |
@@ -51,12 +52,13 @@ container wiring and safe upgrades). Reverse proxy: **Caddy** (automatic TLS).
 | Hetzner CAX31 VPS | ~145 | **+ ~19% VAT (~£30) — not reclaimable (not VAT-registered)** |
 | VAT on EU services | ~30–40 | the biggest quiet cost; base figures were ex-VAT |
 | Off-site backup (BorgBase) | 0–20 | free <10 GB; ~£20 for 100 GB tier |
-| Proton Pass shared vault | 24–50 | free tier sharing limits likely require Pass Plus/Business |
+| Proton Pass Family (BAFZ Vault) | 38–47 | dedicated org account, up to 6 seats — see [0007] |
+| Custom-domain email (Migadu) | 15–19 | `@bafz.org` mailboxes, flat fee — see [0011] |
 | Domain (EU registrar) | ~12–15 | renewal may exceed first-year teaser |
 | File-storage growth | 0–80 | **sleeper** — media/photos can need a Hetzner volume or bigger box |
 | FX + card fees | ~10–15 | costs in EUR/USD against a GBP budget |
 | SMTP relay / monitoring | ~0 | free tiers (Scaleway TEM/Mailjet, Healthchecks) |
-| **Realistic total** | **~£230–280** | thin headroom under the £250–300 ceiling |
+| **Realistic total** | **~£245–300+** | **now presses the £250–300 ceiling** rather than sitting under it — re-check against real storage growth before further spend |
 
 **Excluded from the £-number (but the largest real cost):** the admin's volunteer time —
 ~days/weeks to build, then ~2–5 hrs/month ongoing. See `docs/risks.md`.
@@ -91,8 +93,9 @@ budget hold. Details in the ADRs ([0005], [0007]) and `docs/risks.md`.
   appears — see [0005].
 - ✅ **Proton Pass free-tier sharing limits confirmed — free tier is NOT enough.** Free =
   2 shared vaults, **max 3 people per vault**, and **at most 2 Proton Free users per vault**;
-  so two free admins are already at the ceiling and can't add a third. Budget **Pass Plus
-  (~£24/yr)** for the vault owner (admin) — within budget, matches the [0007] line — see [0007].
+  so two free admins are already at the ceiling and can't add a third. **Implemented: Pass
+  Family (~£38–47/yr) on a dedicated org Proton account**, not the admin's personal one —
+  matches the [0007] line — see [0007].
 
 ## Documentation & contributing
 - Docs follow **Diátaxis** (tutorial / how-to / reference / explanation) — see

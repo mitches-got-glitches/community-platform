@@ -65,13 +65,14 @@ was **ex-VAT and ignored several items**. The honest run-rate:
 |------|------|------------|------|
 | Hetzner CAX31 VPS (ex-VAT) | ~145 | certain | Base compute |
 | **VAT on EU services (~19%)** | **30–40** | certain | **Biggest quiet cost; not reclaimable (not VAT-registered)** |
-| Proton Pass shared vault | 24–50 | likely | Free-tier *sharing* limits → Pass Plus/Business |
+| Proton Pass Family (BAFZ Vault, dedicated org account) | 38–47 | certain | Implemented 2026-07-26 — see [ADR-0007](architecture/0007-secrets-management.md) |
+| Custom-domain email (Migadu, `@bafz.org`) | 15–19 | certain | New — see [ADR-0011](architecture/0011-custom-domain-email-via-migadu.md) |
 | Off-site backup (BorgBase) | 0–20 | conditional | Free <10 GB; ~£20 at 100 GB |
 | File-storage growth | 0–80 | conditional | **Sleeper** — media/photos → volume or bigger box |
 | Domain (EU registrar) | 12–15 | certain | Renewal may exceed teaser pricing |
 | FX + card fees | 10–15 | certain | EUR/USD billing vs GBP budget |
 | SMTP relay / monitoring | ~0 | certain | Free tiers (Scaleway TEM/Mailjet, Healthchecks) |
-| **Realistic total** | **~£230–280** | | **Thin** headroom under the £250–300 ceiling |
+| **Realistic total** | **~£245–300+** | | Pass Family + Migadu add ~£15–20/yr net over the old Pass Plus line — **now presses the £250–300 ceiling rather than sitting under it**. Worth a deliberate re-check against actual member-storage growth before committing further spend. |
 
 **Genuinely free (not hidden):** Caddy/Let's Encrypt TLS, Collabora CODE, Talk HPB/TURN
 bandwidth (within Hetzner's ~20 TB), monitoring free tiers.
