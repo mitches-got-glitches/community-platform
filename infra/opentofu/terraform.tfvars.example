@@ -9,6 +9,7 @@ location    = "fsn1"
 
 ssh_public_key_path = "~/.ssh/id_ed25519.pub"
 
-# Restrict SSH to your known IP(s) once you have them; leaving this as
-# 0.0.0.0/0 relies on key-only auth (INFRA-4) as the sole SSH defence.
-# admin_ipv4_cidrs = ["203.0.113.4/32"]
+# Required — no open default. Restrict SSH to your known IP(s)/VPN range;
+# use [] for whichever family you're not restricting.
+admin_ipv4_cidrs = ["203.0.113.4/32"]
+admin_ipv6_cidrs = []
