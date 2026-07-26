@@ -38,7 +38,7 @@ at length) is a sign it should split into two docs, cross-linked.
 product* — Diátaxis targets the latter, so house-style/process docs sit outside the four
 quadrants deliberately.
 
-Root-level planning docs (`proposal-for-the-org.md`, `risks.md`, `pilot-plan.md`) are
-project/governance artifacts, not documentation for a user of the stack — also
+Planning docs in this directory (`proposal-for-the-org.md`, `risks.md`, `pilot-plan.md`)
+are project/governance artifacts, not documentation for a user of the stack — also
 intentionally outside this map. `docs/archive/` is explicitly archived and no longer
 maintained (see its banner).
