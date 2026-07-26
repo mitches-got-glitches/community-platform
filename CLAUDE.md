@@ -105,3 +105,5 @@ budget hold. Details in the ADRs ([0005], [0007]) and `docs/risks.md`.
 - When a task involves multiple distinct fixes, commit each one immediately after making
   it rather than batching edits and splitting them out afterward — cheaper (no need to
   reconstruct intermediate file states after the fact) and keeps history construction simple.
+- Recurring commands live in the repo-root **justfile** (`just --list` to see what's
+  available), not as copy-paste snippets in docs — add new ones there as they come up.
