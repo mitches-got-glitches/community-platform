@@ -1,19 +1,27 @@
 # Runbook: managed Nextcloud pilot (IONOS £1/mo trial)
 
-**Goal:** cheaply prove whether a managed Nextcloud can be our launch platform — *before* committing real data or migrating off Google/WhatsApp. The pilot answers two questions: **(1) does the managed plan actually deliver our required features** (wiki, tasks, office, files, calendar, ≤10-person calls with guests), and **(2) will members actually use it**.
+**Goal:** prove whether a managed Nextcloud can be our launch platform by **running real projects on it**. The pilot answers two questions: **(1) does the managed plan actually deliver our required features** (tasks/projects, wiki, office, files, calendar, ≤10-person calls with guests), and **(2) will members actually use it**. Because we are using **real member data**, treat this as a **soft launch** (see pre-conditions below), not a throwaway test.
 
 **Why IONOS first:** the 1 TB / 10-user tier is **£1/mo for 3 months** (then £9/mo), with a **30-day money-back guarantee** — so the trial costs ~£3–9 total and carries near-zero commercial risk. But IONOS is **flagged** (community reports: curated app list, possibly no Collectives/Deck, no `occ`, flaky Collabora), so this pilot is explicitly a **test of whether IONOS is good enough** — not a foregone choice. If it fails the app-freedom gate below, **stop, claim the refund, and pilot [The Good Cloud](https://thegood.cloud/) or [Hetzner Storage Share](https://www.hetzner.com/storage/storage-share/) instead** (both more likely to allow full apps).
 
 See [ADR-0012](../architecture/0012-diy-vs-managed-nextcloud.md) for the decision context and [`options-paper-2026-08.md`](../options-paper-2026-08.md) for the full provider comparison.
 
-## Before you start — two safety rules
-- **Use only test data.** Do **not** load real member PII into a throwaway pilot instance (UK GDPR). Use your own account plus 2–3 consenting volunteers and dummy/non-sensitive content. Anything created here may be discarded.
-- **Keep the pilot isolated from `bafz.org`'s live mail.** Use the **IONOS-provided default hostname** for the pilot — do **not** repoint `bafz.org` DNS/MX (Proton Mail is live there; the Migadu migration is a separate, later job — see [ADR-0011](../architecture/0011-custom-domain-email-via-migadu.md) and issue #58). Map `cloud.bafz.org` only *after* the pilot graduates to production.
+## Pilot mode: real data (soft launch)
+This pilot uses **real member data and real projects**, so it is effectively a **soft launch**, not a throwaway test — which raises the stakes, especially on the flagged IONOS. Three **hard pre-conditions before any member data goes in:**
+- **A signed processor-only DPA is in place** — the provider acts as *processor*, processing member data **only on our instructions**, with **no marketing/ad use of member or service data**, EU storage, and a sub-processor list (UK GDPR Art 28). **Decline the marketing consent** at signup. Do not load real data until this is confirmed. See [ADR-0012](../architecture/0012-diy-vs-managed-nextcloud.md).
+- **The day-one own-copy sync is running** (Step 5, brought forward) — a desktop-sync/`rclone` pull of all files to storage we own, from the moment real data lands. It is our backup *and* our exit insurance ([ADR-0006](../architecture/0006-backups-and-disaster-recovery.md)); the provider's T&Cs disclaim liability for data loss, so this is on us.
+- **An exit/deletion plan exists** — how to export our data and have the provider delete it (honouring data-subject requests) if the pilot ends. Real data means real deletion obligations.
+
+> **Reconsider the provider for a real-data pilot.** The £1 IONOS trial made sense as a *throwaway* test. With real data you are launching, and migrating real data *off* IONOS later is lossy (no export). Strongly consider running the real-data pilot on **[The Good Cloud](https://thegood.cloud/)** — the provider you'd actually keep (EU-owned, no ads/tracking, likely full apps) — and reserve IONOS for a quick throwaway app-freedom check only.
+
+**Mailbox stays isolated (agreed):** do **not** touch `bafz.org` **MX/SPF/apex** — Proton Mail stays live and the Migadu migration is a separate later job ([ADR-0011](../architecture/0011-custom-domain-email-via-migadu.md), issue #58). A `cloud.bafz.org` **subdomain** (A/CNAME) is safe to add for a nicer URL — it does not affect mail — but is not required for the pilot.
 
 ## Step 1 — Sign up
 1. Order **IONOS Managed Nextcloud Hosting → 1 TB / 10-user tier** (the £1/mo × 3 promo).
 2. Add the **Collabora "Nextcloud Office" add-on** (~£2/mo) so office editing is testable.
 3. Record the admin login, URL, and billing/renewal date in the **BAFZ Vault** (Proton Pass, [ADR-0007](../architecture/0007-secrets-management.md)) and note the **30-day refund deadline**.
+
+> **IONOS terms to note (GTC, before real data):** the cheap exit is the **30-day money-back window**, *not* the 3-month promo — after 30 days you enter a **12-month minimum term** (auto-renews; cancel ≥1 working day before renewal, so diary it). **Backups are explicitly your responsibility** and IONOS disclaims liability for data loss (*"in no circumstances… liable to recover Your data,"* liability capped at ~12 months' fees) — so the day-one own-copy sync is essential, not optional. **No SLA/uptime guarantee**; IONOS may terminate on **30 days' notice**; and **no guaranteed data export/retrieval on exit**. Obtain and review the **separate DPA** before loading member data. These are standard cheap-managed terms but a poor fit for "the org's resilient home" — [The Good Cloud](https://thegood.cloud/) likely offers better (managed backups included); compare its terms.
 
 ## Step 2 — The app-freedom gate (make-or-break — do this first)
 Before investing any effort, log in as admin and **try to install [Collectives](https://apps.nextcloud.com/apps/collectives) (wiki) and [Deck](https://apps.nextcloud.com/apps/deck) (tasks)** from the app store.
