@@ -12,7 +12,7 @@
 ## TL;DR — recommended path
 
 1. **Host:** move the Nextcloud box to **Netcup VPS 2000 G12** (8 vCPU / 16 GB / 512 GB, ~£198/yr VAT-incl, in stock). Hetzner's June 2026 price rise gutted its x86 value and ARM has been at 0% stock for 30+ days. Amends [ADR-0005](architecture/0005-hosting-provider-and-sizing.md).
-2. **Provisioning:** accept a **one-time manual server order** on Netcup, then codify DNS + server lifecycle with the `rincedd/netcup-ccp` (DNS) and `rincedd/netcup-scp` (server control) providers + Ansible. Amends [ADR-0010](architecture/0010-vps-provisioning-via-opentofu.md).
+2. **Provisioning:** accept a **one-time manual server order** on Netcup (no ordering API exists), then codify DNS + firewall + SSH keys + snapshots with the actively-maintained **`hornc-greedy/netcup`** provider + Ansible — *not* the rincedd providers, which are abandoned (last touched Jan 2021, still `v0.0.1`). Amends [ADR-0010](architecture/0010-vps-provisioning-via-opentofu.md).
 3. **Chat:** keep **Nextcloud Talk** as the launch chat (channels + threads, in the box, fastest). Treat **Element/Matrix via `ess-helm`** as a *time-boxed spike*, not a launch commitment — it introduces Kubernetes and reopens bus-factor. Holds [ADR-0002](architecture/0002-chat-layer.md).
 4. **Email:** per-branch mailboxes + a central oversight mailbox (Option C), on Migadu **Mini** (not Micro — volume). Amends [ADR-0011](architecture/0011-custom-domain-email-via-migadu.md).
 5. **External SaaS:** **Qomon stays** and *shrinks* the self-hosted scope (it owns outward member CRM + mass comms). Reconcile its email sending into the `bafz.org` SPF/DMARC before any mailbox change.
@@ -62,17 +62,20 @@ The hosting reopening is also a natural moment to revisit ADR-0012 (still *Propo
 
 ## Decision 2 — Provisioning / IaC (the Netcup catch)
 
-Hetzner's appeal for [ADR-0010](architecture/0010-vps-provisioning-via-opentofu.md) was its first-class OpenTofu `hcloud` provider (full create/destroy lifecycle). **Netcup has no server-ordering API at all** — ordering is web-shop only. But two community Terraform providers recover most of the IaC story:
+Hetzner's appeal for [ADR-0010](architecture/0010-vps-provisioning-via-opentofu.md) was its first-class OpenTofu `hcloud` provider (full create/destroy lifecycle). **Netcup has no server-ordering API at all** — ordering is web-shop only, so *no* provider can create a server. But a community provider recovers most of the rest of the IaC story. Two candidates, and the maintenance signal is decisive:
 
-- **`rincedd/netcup-ccp`** — Netcup **DNS records** as code (`netcup-ccp_dns_record`). ✅
-- **`rincedd/netcup-scp`** — control of **servers you already own** via the SCP API: query, power, and crucially **reinstall to a known OS image**. ✅
-- **Neither can *order* a new server** — that stays a one-time manual click.
+| Provider | Scope | Latest release | Last commit | Adoption |
+|---|---|---|---|---|
+| **`hornc-greedy/netcup`** (recommended) | **Unified** — DNS + SCP REST: firewall, SSH keys, snapshots, reverse DNS, failover | **v1.0.0 (Jun 2026)** | **2026-07-22** | 1★ / 0 forks — new, unproven |
+| `rincedd/netcup-ccp` + `-scp` | Split — DNS (ccp) + server control/reinstall (scp) | v0.0.1 (Jan 2021) | **Jan 2021** | 16★ + 13★ — but **abandoned ~5y, pre-1.0** |
 
-**Resulting pattern:** order the VPS once (manual) → `netcup-scp` reinstalls it to a clean image → cloud-init + Ansible configure it → `netcup-ccp` manages DNS. For a **long-lived single box**, the only un-codified step is the initial purchase — and DR ("rebuild from scratch") is still reproducible via reinstall-image + Ansible on the box we own.
+**Prefer `hornc-greedy/netcup`:** it's current (v1.0.0, commits weeks ago), broader (one provider does DNS **+ firewall + SSH keys + snapshots + reverse DNS** as code — close IaC parity with the old Hetzner firewall/SSH resources), and uses Netcup's newer SCP REST API. The rincedd pair, despite more stars, hasn't been touched since January 2021 and never left `v0.0.1` — five years of Netcup API drift make it a poor bet.
 
-**Caveats:** these are third-party, single-maintainer providers — pin versions; fallback if abandoned is the SCP web panel by hand (config, not data — annoying, not fatal). This is a *smaller* degradation than "abandon IaC," but it does mean ADR-0010 moves from "OpenTofu creates everything" to "OpenTofu owns DNS + server config + reinstall; initial order is manual."
+**Resulting pattern:** order the VPS once (manual — no API) → codify firewall + SSH keys + DNS + reverse DNS via `hornc-greedy/netcup` → cloud-init + Ansible for the OS/app layer → snapshot before risky upgrades. Only server *creation* is un-codified; DR ("rebuild") is reproducible via reinstall/snapshot + Ansible on the box we own.
 
-**Recommendation:** accept the pattern above. Amends ADR-0010.
+**Caveats:** `hornc-greedy/netcup` is a single-author, 1-star project — the "fresh but unproven" trade (a small irony for a bus-factor-conscious org). Mitigate: it's MPL-2.0, so **pin the exact version and vendor/mirror the binary**; the universal fallback for any Netcup provider is the SCP/CCP web panel by hand (config, not data — recoverable). Also **verify it can trigger an OS reinstall** (rincedd-scp's DR trick); if not, its snapshots-as-code is an equal-or-better DR primitive. Net: ADR-0010 moves from "OpenTofu creates everything" to "OpenTofu owns DNS + firewall + SSH + snapshots + rDNS; the initial server order is a one-time manual click."
+
+**Recommendation:** `hornc-greedy/netcup`, pinned + mirrored. Amends ADR-0010.
 
 ---
 
@@ -215,7 +218,7 @@ Rule of thumb: **in-repo** for anything code-adjacent or that a second admin nee
 | Decision | ADR action |
 |---|---|
 | Host → Netcup | **Amend/supersede [ADR-0005](architecture/0005-hosting-provider-and-sizing.md)** (provider, sizing, price-increase reality) |
-| Provisioning pattern | **Amend [ADR-0010](architecture/0010-vps-provisioning-via-opentofu.md)** (Netcup: manual order + `netcup-ccp`/`netcup-scp` + Ansible) |
+| Provisioning pattern | **Amend [ADR-0010](architecture/0010-vps-provisioning-via-opentofu.md)** (Netcup: manual order + `hornc-greedy/netcup` for DNS/firewall/SSH/snapshots + Ansible) |
 | Chat = Talk; Element as spike | **Holds [ADR-0002](architecture/0002-chat-layer.md)**; a superseding ADR only if Element/k8s is adopted (touches [0009](architecture/0009-bus-factor-and-second-admin.md)) |
 | DIY vs managed Nextcloud | **Leaves [ADR-0012](architecture/0012-diy-vs-managed-nextcloud.md) open** — checklist still unanswered |
 | Proton-as-backbone | **New ADR** recording it as considered/rejected (touches CLAUDE.md premise, [0007](architecture/0007-secrets-management.md)) |
