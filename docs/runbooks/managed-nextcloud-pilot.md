@@ -59,3 +59,16 @@ Against Steps 2–6:
 
 ## Cost
 ~£1/mo × 3 + ~£2/mo Collabora ≈ **£9 for a 3-month pilot** (or less with the 30-day refund). Trivial next to what it de-risks.
+
+## Appendix — pre-sales questions for The Good Cloud (production candidate)
+If IONOS fails the app-freedom gate (or on values/T&C grounds), [The Good Cloud](https://thegood.cloud/) is the leading production home. **Ask about the Organisation/Business tier, *not* Consumer** — Consumer is a *personal* Nextcloud account (a Proton-Drive-like personal cloud) and would recreate the "scattered across personal accounts, org owns nothing" problem. Confirm:
+1. **Tier & ownership:** an **Organisation** plan = one **org-owned** Nextcloud with central admin + managed member accounts (not personal accounts). Pricing at ~10 users now and at 25–30.
+2. **App freedom (the gate IONOS fails):** are **Deck, Collectives, Talk, Collabora/OnlyOffice** all available, and can we install other App Store apps — or is it a curated list?
+3. **Group video:** does Talk do **≥10-person calls**, with **external guests via public link**?
+4. **Backups:** are **backups included/managed** (frequency, retention), and can we **also pull our own off-site copy** ([ADR-0006](../architecture/0006-backups-and-disaster-recovery.md))?
+5. **DPA:** provide the **processor-only DPA** — member data processed only on our instructions, **no marketing/ad use**, EU storage, sub-processor list, retention/deletion terms.
+6. **Exit / portability:** on leaving, do we get a **full export / admin / database** for a clean migration (unlike IONOS's no-export lock-in)?
+7. **Admin control:** do we get Nextcloud **admin** rights (settings, user provisioning, app management)? Any `occ`?
+8. **SLA / continuity:** uptime commitment, support hours, and company size/track record (it is a small B.V. — [R-18](../risks.md)).
+9. **Trial:** an Organisation trial, or can we smoke-test on the free 6-month **Consumer** trial (noting its app set may differ from Organisation)?
+10. **Custom domain:** can we use **`cloud.bafz.org`** and keep mail (MX) on Proton/Migadu — i.e. **subdomain only, no nameserver takeover**?
