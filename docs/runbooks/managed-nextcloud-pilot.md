@@ -14,7 +14,14 @@ This pilot uses **real member data and real projects**, so it is effectively a *
 
 > **Reconsider the provider for a real-data pilot.** The £1 IONOS trial made sense as a *throwaway* test. With real data you are launching, and migrating real data *off* IONOS later is lossy (no export). Strongly consider running the real-data pilot on **[The Good Cloud](https://thegood.cloud/)** — the provider you'd actually keep (EU-owned, no ads/tracking, likely full apps) — and reserve IONOS for a quick throwaway app-freedom check only.
 
-**Mailbox stays isolated (agreed):** do **not** touch `bafz.org` **MX/SPF/apex** — Proton Mail stays live and the Migadu migration is a separate later job ([ADR-0011](../architecture/0011-custom-domain-email-via-migadu.md), issue #58). A `cloud.bafz.org` **subdomain** (A/CNAME) is safe to add for a nicer URL — it does not affect mail — but is not required for the pilot.
+**Mailbox stays isolated (agreed):** do **not** touch `bafz.org` **MX/SPF/apex** — Proton Mail stays live and the Migadu migration is a separate later job ([ADR-0011](../architecture/0011-custom-domain-email-via-migadu.md), issue #58).
+
+**Domain for the pilot — note we do *not* currently control `bafz.org`'s DNS** (a separate admin holds it). Options, easiest first:
+- **(a) IONOS default hostname** — if offered, zero DNS work and fully isolated; launch today, move to a real domain later.
+- **(b) Ask the `bafz.org` admin to add *one* record** — a single `cloud.bafz.org` A/CNAME → the IONOS instance. You don't need to own the domain, just get this added; it **does not touch mail** and gives the right long-term URL.
+- **(c) Register a cheap dedicated domain we control** (~£12/yr) for a clean, dependency-free URL.
+
+In every case: **never** change `bafz.org` nameservers or apex `MX`/`SPF`/`DMARC`. Establishing **org control of `bafz.org`** (registrar access in the org's name, in the vault, auto-renew) is a pre-production governance task — see [R-29](../risks.md).
 
 ## Step 1 — Sign up
 1. Order **IONOS Managed Nextcloud Hosting → 1 TB / 10-user tier** (the £1/mo × 3 promo).
