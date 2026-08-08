@@ -18,8 +18,9 @@
 5. **External SaaS:** **Qomon stays** and *shrinks* the self-hosted scope (it owns outward member CRM + mass comms). Reconcile its email sending into the `bafz.org` SPF/DMARC before any mailbox change.
 6. **Kanban:** it's **Nextcloud Deck** — another reason Nextcloud stays even if Element is added. See [feature ownership](#feature-ownership--where-each-need-is-met).
 7. **New records to keep:** service/vendor inventory, DNS zone register, GDPR RoPA + DPA register, access/offboarding register, incident/breach log. See [records to track](#records--registers-to-track).
+8. **If users climb to 50–100:** the maths *inverts* — DIY gets cheaper per head while managed gets pricey, **SSO becomes mandatory** (reopens ADR-0004), Matrix's scale case strengthens, and a solo volunteer admin becomes imprudent. The £250–300 ceiling retires. See *Scale scenario* below.
 
-**Cost headline:** Netcup restores the budget the Hetzner increase broke (~£270–290/yr all-in for the single-stack plan). Adding a *second* self-hosted stack (Element alongside Nextcloud) pushes past the £300 ceiling — that's a committee budget conversation, not an accident.
+**Managed Nextcloud** is now costed as a live alternative (IONOS ~£108/yr at ≤10 users — *cheaper* than DIY, near-zero ops), but wins only if a sovereign provider confirms Talk **HPB group video** (see Decision 1). **Cost headline:** Netcup restores the budget the Hetzner increase broke (~£270–290/yr all-in for the single-stack plan). Adding a *second* self-hosted stack (Element alongside Nextcloud) pushes past the £300 ceiling — that's a committee budget conversation, not an accident.
 
 ---
 
@@ -53,10 +54,31 @@ Net: the ARM-value thesis that made Hetzner the pick is, for now, unavailable *a
 
 **Why Netcup wins for the Nextcloud box:** cheaper than any *in-stock* Hetzner x86 by ~£90–650/yr; **512 GB disk (3×)** quietly retires the "storage-growth sleeper" risk (R-10) for free; DDR5; no setup fee; hourly *or* 12-month billing; same German jurisdiction as Hetzner. The trade is provisioning (Decision 2) and a more budget-tier support/reputation vs Hetzner's prosumer polish.
 
-### Sub-thread: DIY vs managed Nextcloud ([ADR-0012](architecture/0012-diy-vs-managed-nextcloud.md))
-The hosting reopening is also a natural moment to revisit ADR-0012 (still *Proposed*). Managed Nextcloud (Hetzner Storage Share, IONOS) buys down bus-factor + volunteer time but risks losing Talk **HPB group video**, Collectives/Deck, and the code-first constraint. **Recommendation:** keep DIY-on-Netcup as plan of record; only switch to managed if the ADR-0012 checklist confirms group video + apps are supported. The Netcup move does not resolve ADR-0012 — it just changes which box DIY runs on.
+### Managed Nextcloud — the ADR-0012 contender, now with providers + pricing
+The hosting reopening is the moment to give [ADR-0012](architecture/0012-diy-vs-managed-nextcloud.md) (still *Proposed*) real numbers. Managed Nextcloud attacks our **two largest real costs — volunteer time and bus factor** (the provider patches, upgrades, and backs up), for money now competitive with DIY. The price of that is two hard constraints (infra we control; code-first IaC) and the standing risk that **group video (Talk HPB) and some apps aren't available** — the gating question.
 
-**Recommendation:** **Netcup VPS 2000 G12**, DIY. Amends ADR-0005; leaves ADR-0012 open.
+One deliberate exception aside (AccuWeb, flagged below, kept in at the org's request), the list is sovereign-filtered. US-owned providers carry US CLOUD Act / FISA 702 exposure and so fail our sovereignty baseline *regardless of where the data physically sits* — **residency ≠ sovereignty**, exactly the distinction in `CLAUDE.md`.
+
+| Provider | Owner / host | ~£/yr, ≤10 users | ~£/yr, ~25 users | Group video (HPB) | Apps / Deck / Collectives |
+|---|---|---|---|---|---|
+| **IONOS Nextcloud Workspace** | 🇩🇪 DE | ~£108 (£9/mo) | ~£240 (£20/mo) | ⚠️ **unconfirmed** — curated suite | Collabora + Talk included; app freedom unconfirmed |
+| **Hetzner Storage Share** | 🇩🇪 DE (our trusted vendor) | ~£45–140 by storage | scales by storage/users | ❌ **no HPB** (shared managed env) | curated apps; Talk basic / small calls only |
+| **TAB.DIGITAL** | EU-hosted; **ownership unclear** | low per-user (verify) | verify | ✅ **HPB sold as an add-on** | Collabora/ONLYOFFICE/Whiteboard/FTS; Deck/Collectives likely |
+| **The Good Cloud** | 🇳🇱 NL, **EU-owned** (Good Cloud B.V., Utrecht) | verify | verify | ⚠️ ask pre-sales | Nextcloud partner; likely full apps |
+| **Portknox** | 🇩🇪 DE, **EU-owned** | verify | verify | ⚠️ ask pre-sales | curated app list |
+| **AccuWeb.Cloud** ⚠️ | 🇺🇸 **US company** (EU data-centre option) | pay-as-you-go (usage; verify) | pay-as-you-go | ✅ likely (PaaS + full App Store) | ✅ **full App Store** |
+
+Prices need a VAT check (some are listed ex-VAT); IONOS ran a launch promo (25 users at £1/user/mo for 3 months).
+
+**Gating verdict (ADR-0012's decision rule):** the differentiator is **Talk HPB group video at 20–30**. On current evidence — **Hetzner Storage Share can't** (no HPB), **IONOS is unconfirmed** (curated suite, most likely restricted), **TAB.DIGITAL clearly can** (HPB add-on) but is weakest on *ownership* sovereignty, and **The Good Cloud / Portknox** (both EU-owned) are the unknowns worth a direct pre-sales question. So ADR-0012's rule stands: **managed becomes the recommendation *if* a sovereign provider confirms HPB + Collectives + Deck at acceptable cost; otherwise DIY holds.**
+
+**On AccuWeb.Cloud (kept in at the org's request):** its pitch — *"private, decentralized, open-source… not just avoiding Big Tech"* — genuinely matches the **ethos** (open-source app, no Google/M365 lock-in, full app freedom, and its PaaS model most likely *can* run HPB, so it clears the app gate cleanly). But it is a **US company**, so US law reaches its data even in an EU data centre — the exact exposure the sovereignty *hard constraint* exists to avoid. It clears the **app** gate but not the **sovereignty** gate. Keep it as an option **only if the committee consciously relaxes the US-jurisdiction constraint** — a premise change worth recording as its own decision — not by mistaking EU data residency for sovereignty.
+
+**Hybrid worth noting:** managed Nextcloud for files/wiki/tasks/calendar/1:1-Talk (offloads all ops) **+ a separate Jitsi** for group video — the exact escape hatch ADR-0012 flags when a managed plan lacks HPB. Costs a small extra Jitsi box but keeps near-zero ops on the heavy part.
+
+**Scale note:** at today's ~10 users, IONOS (~£108/yr) is **cheaper than the DIY server** (~£198/yr) *and* removes ops — managed is genuinely attractive *now*, and only loses its price edge nearer 25–30 users.
+
+**Recommendation:** **Netcup VPS 2000 G12, DIY** remains plan of record — but promote managed to *recommended* if a pre-sales check confirms HPB group video on an EU-owned provider (start with The Good Cloud and IONOS). Amends ADR-0005; **feeds real provider/pricing data into ADR-0012** (no longer just an unanswered checklist).
 
 ---
 
@@ -178,17 +200,32 @@ Answers "which part of the stack gives a Kanban board": **Nextcloud Deck.**
 
 ---
 
-## Cost scenarios vs the ~£250–300 ceiling
+## Cost scenarios vs the ~£250–300 ceiling (at today's ~10 users)
 
-| Scenario | Server(s)/yr | + backups/domain/vault/email* | Total |
+| Scenario | Hosting /yr | + domain/vault/email/backups* | Total |
 |---|---|---|---|
-| **Nextcloud + Talk** (Netcup VPS 2000) | ~£198 | ~£90–110 | **~£290–310** — at/just over ceiling |
-| **Element only** (Netcup VPS 1000, chat-only org) | ~£106 | ~£90–110 | ~£196–216 |
-| **Both** (VPS 2000 + VPS 1000) | ~£304 | ~£90–110 | **~£394–414** — over |
+| **DIY Nextcloud + Talk** (Netcup VPS 2000) | ~£198 | ~£145 | **~£343** (~£290 if Migadu Micro suffices) |
+| **Managed Nextcloud + Talk** (IONOS) | ~£108 (≤10) – £240 (~25) | ~£125** | **~£233 now – £365 at 25** — near-zero ops |
+| **Element only** (Netcup VPS 1000, chat-only org) | ~£106 | ~£145 | ~£251 |
+| **Both self-hosted** (VPS 2000 + VPS 1000) | ~£304 | ~£145 | **~£449** — over |
 
-*Backups ~£20, domain ~£13, Proton Pass ~£42, **Migadu Mini ~£70** (up from ~£15 at Micro). The Migadu-tier correction and any Hetzner→Netcup FX/card fees are the moving parts.
+*Domain ~£13, Proton Pass ~£42, backups ~£20, **Migadu Mini ~£70** (or ~£17 at Micro if branch 1:1 volume is low — a £53 swing). Plus Hetzner→Netcup FX/card fees.
+**Managed: the provider backs up, so the £20 self-hosted-backup line is optional (kept for an own off-site copy per [ADR-0006](architecture/0006-backups-and-disaster-recovery.md)).
 
-Two takeaways: **Netcup pulls the server line back under control** after the Hetzner increase; and **"both stacks" clearly needs a committee budget decision**, not a silent drift.
+Takeaways: **Netcup pulls the DIY server line back under control** after the Hetzner increase; **managed Nextcloud is cheaper than DIY at today's ~10 users** and only loses that edge nearer 25; and **two self-hosted stacks breach the ceiling** — a committee budget decision, not a silent drift. How this inverts at 50–100 users is its own section below.
+
+## Scale scenario — what changes at 50–100 users
+
+The £250–300 ceiling and single-box sizing are *small-org* assumptions. At 50–100 users several things move at once, and some **reverse**:
+
+- **Compute & storage.** 16 GB (Netcup VPS 2000) is sized for 20–30. At 50–100 you move to **Netcup VPS 4000 (32 GB, ~£333/yr)** or **VPS 8000 (64 GB, ~£492/yr)**, and likely **split services** (Collabora and the Talk HPB onto their own boxes) — the AIO single-box model starts to strain. File growth pushes the primary data store toward **S3-compatible object storage** on a sovereign provider, and a larger BorgBase backup tier.
+- **The cost curve inverts.** Managed Nextcloud is *cheaper than DIY at 10 users but far pricier at 100*: IONOS at 50 users is ~£540/yr and climbs; a single 64 GB DIY box serving 100 is ~£492/yr (~£5/user/yr). So **DIY's cost advantage returns at scale** — while the **bus-factor/ops argument for managed intensifies** (one volunteer running a multi-service stack for 100 people is imprudent). That tension, not price, becomes the deciding factor.
+- **SSO stops being optional — reopens [ADR-0004](architecture/0004-identity-and-sso.md).** Hand-provisioning 100 accounts across Nextcloud, Talk/Matrix, and email — and *de*-provisioning on exit — is untenable and a security/GDPR risk. An **IdP (Keycloak / Authentik / Zitadel)** with SSO becomes near-mandatory.
+- **Chat: the Matrix calculus shifts — [ADR-0002](architecture/0002-chat-layer.md).** Talk is fine for chat at any size, but its group-video (HPB) load at 50–100 is heavy; Matrix/Synapse is *built* for large communities (spaces, big rooms, federation), so the richer chat ADR-0002 deferred starts to justify itself — at the cost of Synapse-at-scale ops (workers, tuning) that again point to *managed* Matrix.
+- **Email.** Migadu mailboxes stay flat-fee (a plus), but the account-wide daily send/receive limits push you to **Standard (~£240/yr)**. Mass member email stays on Qomon regardless.
+- **Governance & availability.** 50–100 members' data makes the RoPA/DPA/access registers a firmer legal duty, and downtime hurts more people — HA (still costly) moves from "out of scope" to "worth pricing."
+
+**Bottom line:** 50–100 users is past the point where a bus-factor-1 volunteer *should* run this solo. The realistic shapes become **(a) DIY on a bigger split-service box + a real admin team + SSO**, or **(b) managed Nextcloud/Matrix**, accepting the higher fee for continuity. Either way the **£250–300 ceiling is retired** in favour of a per-user budget — and this should trigger a committee conversation *well before* the org reaches that size, not at it.
 
 ---
 
@@ -220,7 +257,8 @@ Rule of thumb: **in-repo** for anything code-adjacent or that a second admin nee
 | Host → Netcup | **Amend/supersede [ADR-0005](architecture/0005-hosting-provider-and-sizing.md)** (provider, sizing, price-increase reality) |
 | Provisioning pattern | **Amend [ADR-0010](architecture/0010-vps-provisioning-via-opentofu.md)** (Netcup: manual order + `hornc-greedy/netcup` for DNS/firewall/SSH/snapshots + Ansible) |
 | Chat = Talk; Element as spike | **Holds [ADR-0002](architecture/0002-chat-layer.md)**; a superseding ADR only if Element/k8s is adopted (touches [0009](architecture/0009-bus-factor-and-second-admin.md)) |
-| DIY vs managed Nextcloud | **Leaves [ADR-0012](architecture/0012-diy-vs-managed-nextcloud.md) open** — checklist still unanswered |
+| DIY vs managed Nextcloud | **Feeds provider + pricing data into [ADR-0012](architecture/0012-diy-vs-managed-nextcloud.md)**; still gated on a sovereign provider confirming Talk HPB group video |
+| Scale to 50–100 users | **Reopens [ADR-0004](architecture/0004-identity-and-sso.md)** (SSO), re-weights [ADR-0002](architecture/0002-chat-layer.md) (Matrix) and [ADR-0005](architecture/0005-hosting-provider-and-sizing.md) (sizing/split services); retires the £250–300 ceiling |
 | Proton-as-backbone | **New ADR** recording it as considered/rejected (touches CLAUDE.md premise, [0007](architecture/0007-secrets-management.md)) |
 | Mailbox topology | **Amend [ADR-0011](architecture/0011-custom-domain-email-via-migadu.md)** (Option C, Mini-tier cost, no-delegation, migration gate) |
 | Qomon boundaries + senders | **Amend [ADR-0011](architecture/0011-custom-domain-email-via-migadu.md)** (4-sender SPF/DMARC) + an architecture note on external-SaaS boundaries |
@@ -234,5 +272,5 @@ Rule of thumb: **in-repo** for anything code-adjacent or that a second admin nee
 2. **Decide chat direction:** Talk-only for launch (recommended) vs a funded Element spike. → holds or supersedes ADR-0002.
 3. **Identify `sendersrv.com`** and inventory all `bafz.org` senders; design one combined SPF + DKIM set (Migadu + relay + Qomon). → amend ADR-0011.
 4. **Reconcile Proton Mail already being live** with the Migadu plan — migrate or retain? → ADR-0011 migration section.
-5. **Answer the ADR-0012 checklist** (managed-Nextcloud app support) or explicitly defer it.
+5. **Close the ADR-0012 gating question** with a pre-sales check to an EU-owned managed provider (The Good Cloud, IONOS, Portknox) on **Talk HPB group video + Deck + Collectives + app freedom**; if one confirms, managed likely wins at today's scale. If the org relaxes the US-jurisdiction constraint, record that separately before considering AccuWeb.
 6. **Stand up `docs/reference/`** with the high-priority registers before production data lands.
