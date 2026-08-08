@@ -54,6 +54,12 @@ Two traps specific to this use case:
   recovery is a *rebuild-and-restore* (minutes-to-hours), not high availability — accepted
   at this budget.
 
+## Update (2026-08-08) — if launched on managed Nextcloud
+This ADR assumes DIY (AIO's built-in Borg → BorgBase). If we launch on **managed Nextcloud** ([ADR-0012](0012-diy-vs-managed-nextcloud.md)) the model changes:
+- **The provider backs up the instance**, but managed plans give **no full export / no DB dump / no `occ`** (confirmed for IONOS). So the provider's backup is *not* a portable copy we control.
+- **Hedge (do from day one):** run a **desktop-sync or `rclone` WebDAV pull** of all files to storage we own — simultaneously our **off-site copy** (preserving this ADR's sovereignty/3-2-1 intent) **and** our **migration insurance** (the exit path in [ADR-0012](0012-diy-vs-managed-nextcloud.md)). Export calendars (`.ics`) and Deck boards (JSON) periodically for the same reason.
+- **AIO/BorgBase, Borg-key custody, and Healthchecks on the Borg cron apply only to DIY**; on managed, the equivalent "loud, not silent" check is verifying the day-one sync ran.
+
 ## Conditions / follow-ups
-- Restore test + alerting + key-in-vault are **launch blockers** (see CLAUDE.md).
-- Re-test the restore after any major AIO upgrade.
+- Restore test + alerting + key-in-vault are **launch blockers** (see CLAUDE.md) — on managed, the restore test becomes *prove you can rebuild from the day-one sync copy into a fresh Nextcloud*.
+- Re-test the restore after any major AIO upgrade (DIY) or provider migration (managed).

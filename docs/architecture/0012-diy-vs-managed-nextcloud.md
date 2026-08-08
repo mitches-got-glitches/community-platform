@@ -1,6 +1,6 @@
 # ADR-0012: DIY vs Managed Nextcloud (reconsidering archetype C)
 
-- **Status:** Proposed — *pending provider verification (see checklist below)*
+- **Status:** Proposed → leaning **Accept (managed launch)**, gated on the pilot app-freedom test — see the [2026-08-08 update](#update-2026-08-08--providerpricing-gathered-managed-is-the-leaning-launch-path)
 - **Date:** 2026-06-18
 - **Deciders:** Technical admin
 - **Relates to:** [ADR-0001](0001-nextcloud-backbone-and-deployment.md) (deployment),
@@ -61,6 +61,18 @@ a real risk that **group video and some apps aren't available**.
   has a concrete alternative if recruiting fails — better than scrambling later.
 - If we switch, group video may *still* need a separate Jitsi (managed plans rarely host
   the HPB) — fold that into the cost comparison before deciding.
+
+## Update (2026-08-08) — provider/pricing gathered; managed is the leaning launch path
+Real research (see [`options-paper-2026-08.md`](../options-paper-2026-08.md)) resolves most of the checklist:
+
+- **The gate moved.** Real group calls are **≤10 with guests**, so **HPB group video is no longer required** ([ADR-0003](0003-voice-video.md) update) — it stops gating provider choice. The **new gate is app freedom**: can the plan install **Collectives (wiki) + Deck (tasks)** and run a working office suite? Those are required features.
+- **IONOS is flagged 🚩.** Community reports: **curated app list, no arbitrary installs** (Collectives/Deck likely unavailable), **no OnlyOffice**, **flaky Collabora**, **no `occ`**, plus performance/outdated-version complaints. Marketing disagrees and reports cite old versions → **unverified-but-risky**. Pricing (Managed Nextcloud Hosting): **£1/mo × 3 promo then £9/mo** (1 TB / 10 users); Collabora a ~£2/mo add-on.
+- **Shortlist re-ranked to full-Nextcloud managed providers:** **The Good Cloud** (🇳🇱 EU-owned, Nextcloud partner) and **Hetzner Storage Share** (🇩🇪 trusted vendor; its only gap was HPB, now moot). Both need a pre-sales/pilot confirm on Collectives + Deck + office.
+- **Cost at ≤10 users favours managed:** ~£108–130/yr vs ~£198/yr for the DIY server, *plus* near-zero ops — the bus-factor win. The curve **inverts by ~25–50 users**; DIY-on-Netcup ([ADR-0010](0010-vps-provisioning-via-opentofu.md)) is the on-trigger target.
+
+**Leaning decision:** **managed Nextcloud for launch**, provider chosen via the [pilot runbook](../runbooks/managed-nextcloud-pilot.md) app-freedom test (IONOS as the cheap first test; The Good Cloud / Hetzner Storage Share if it fails). This **consciously relaxes two `CLAUDE.md` hard constraints for the launch period** — *"infra we control"* → *"an EU vendor controls the box under our account"* (still EU/GDPR-sovereign), and *"code-first IaC"* → largely click-ops — accepted deliberately, on record, as the price of buying down bus factor + volunteer time. It **eases [ADR-0009](0009-bus-factor-and-second-admin.md)**: the provider is operational continuity, so the 2nd-admin deadline is less acute.
+
+**Exit is a planned, triggered move** (managed → DIY-on-Netcup). Managed gives no clean export, so migration is per-app — files via the day-one sync copy, calendars `.ics`, contacts `.vcf`, Deck JSON, Collectives markdown; **Talk history is sacrificed**. **Triggers:** (1) a required feature hits the managed wall; (2) cost inverts with scale (~25–50+ users); (3) a second admin exists and wants IaC control; (4) sovereignty/vendor terms tighten; (5) provider failure. **Hedge:** run the day-one own-copy sync from launch ([ADR-0006](0006-backups-and-disaster-recovery.md) update) — both off-site backup and migration insurance. Switching cost grows with accumulated history, so if DIY is judged inevitable, migrate while data is light.
 
 ## Things to check next time (verification checklist)
 Answer these before promoting this ADR to Accepted or rejecting it. Carry over to the next

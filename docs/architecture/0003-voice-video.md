@@ -33,6 +33,13 @@ group calls at our 20–30 person sizing target. Do **not** pre-emptively deploy
 - HPB does increase CPU/bandwidth use during group calls; the chosen box has headroom and
   Hetzner bandwidth (~20 TB) is effectively free — see [0005](0005-hosting-provider-and-sizing.md).
 
+## Update (2026-08-08) — video decoupled; HPB deferred
+Two facts revise this ADR (see [`options-paper-2026-08.md`](../options-paper-2026-08.md)):
+- **Real group calls are ≤10 people, sometimes with external guests** — within plain Talk's range, so the **High Performance Backend is not required** and is **deferred** (it was sized for 20–30). External guests join Talk conversations via **public/guest links**, no account needed.
+- **Voice/video is decoupled from the collaboration host.** Removing HPB as a requirement on the provider is a key reason **managed Nextcloud** becomes viable — see [ADR-0012](0012-diy-vs-managed-nextcloud.md).
+
+**Revised decision:** use **Talk's built-in calling (no HPB)** for the ≤10 case; keep **Jitsi as the documented fallback** if quality disappoints or calls grow. For sovereignty a fallback Jitsi should be **self-hosted on an EU VPS** (~4 GB) — the public **meet.jit.si is operated by 8x8 (US)**, accepted as a **casual/non-sensitive bridge for now** but not for the sovereign stack. Re-enable HPB (DIY) or add Jitsi if calls routinely exceed ~10 (ties to the 50–100 scale scenario and [ADR-0004](0004-identity-and-sso.md)).
+
 ## Conditions / follow-ups
-- Trial group calls at realistic participant counts before declaring this closed. If
-  quality is inadequate, deploy Jitsi as a sidecar service and document it.
+- **Pilot test:** a real **10-person Talk call + an external guest** is a success criterion in the [managed-Nextcloud pilot runbook](../runbooks/managed-nextcloud-pilot.md).
+- If quality is inadequate at ≤10, deploy a **self-hosted EU Jitsi** as the sidecar and document it.
