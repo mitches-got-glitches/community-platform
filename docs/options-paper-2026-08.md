@@ -20,7 +20,7 @@
 7. **New records to keep:** service/vendor inventory, DNS zone register, GDPR RoPA + DPA register, access/offboarding register, incident/breach log. See [records to track](#records--registers-to-track).
 8. **If users climb to 50–100:** the maths *inverts* — DIY gets cheaper per head while managed gets pricey, **SSO becomes mandatory** (reopens ADR-0004), Matrix's scale case strengthens, and a solo volunteer admin becomes imprudent. The £250–300 ceiling retires. See *Scale scenario* below.
 
-**Managed Nextcloud** is now costed as a live alternative (IONOS ~£108/yr at ≤10 users — *cheaper* than DIY, near-zero ops), but wins only if a sovereign provider confirms Talk **HPB group video** (see Decision 1). **Cost headline:** Netcup restores the budget the Hetzner increase broke (~£270–290/yr all-in for the single-stack plan). Adding a *second* self-hosted stack (Element alongside Nextcloud) pushes past the £300 ceiling — that's a committee budget conversation, not an accident.
+**Managed Nextcloud is now the leaning launch path** (lowest bus factor at ≤10 users, near-zero ops), with **provider gated on an app-freedom check** — it must install **Collectives + Deck** and run a working office. Shortlist **The Good Cloud** and **Hetzner Storage Share**; **IONOS is flagged 🚩** (community reports: curated app list, likely no Collectives/Deck, no `occ`) — worth only the cheap £1 trial to test. **Netcup DIY** becomes the **on-trigger** target. **Cost headline:** Netcup restores the budget the Hetzner increase broke (~£270–290/yr all-in for the single-stack plan). Adding a *second* self-hosted stack (Element alongside Nextcloud) pushes past the £300 ceiling — that's a committee budget conversation, not an accident.
 
 ---
 
@@ -61,16 +61,20 @@ One deliberate exception aside (AccuWeb, flagged below, kept in at the org's req
 
 | Provider | Owner / host | ~£/yr, ≤10 users | ~£/yr, ~25 users | Group video (HPB) | Apps / Deck / Collectives |
 |---|---|---|---|---|---|
-| **IONOS Nextcloud Workspace** | 🇩🇪 DE | ~£108 (£9/mo) | ~£240 (£20/mo) | ⚠️ **unconfirmed** — curated suite | Collabora + Talk included; app freedom unconfirmed |
-| **Hetzner Storage Share** | 🇩🇪 DE (our trusted vendor) | ~£45–140 by storage | scales by storage/users | ❌ **no HPB** (shared managed env) | curated apps; Talk basic / small calls only |
-| **TAB.DIGITAL** | EU-hosted; **ownership unclear** | low per-user (verify) | verify | ✅ **HPB sold as an add-on** | Collabora/ONLYOFFICE/Whiteboard/FTS; Deck/Collectives likely |
-| **The Good Cloud** | 🇳🇱 NL, **EU-owned** (Good Cloud B.V., Utrecht) | verify | verify | ⚠️ ask pre-sales | Nextcloud partner; likely full apps |
-| **Portknox** | 🇩🇪 DE, **EU-owned** | verify | verify | ⚠️ ask pre-sales | curated app list |
-| **AccuWeb.Cloud** ⚠️ | 🇺🇸 **US company** (EU data-centre option) | pay-as-you-go (usage; verify) | pay-as-you-go | ✅ likely (PaaS + full App Store) | ✅ **full App Store** |
+| **The Good Cloud** ⭐ | 🇳🇱 NL, **EU-owned** (Good Cloud B.V., Utrecht) | verify | verify | N/A at ≤10 | Nextcloud partner → **likely full apps incl. Collectives/Deck** |
+| **Hetzner Storage Share** ⭐ | 🇩🇪 DE (our trusted vendor) | ~£45–140 by storage | scales by storage/users | no HPB — **but not needed at ≤10** | full Nextcloud; can add apps — **verify Collectives/Deck** |
+| **IONOS Managed Nextcloud** 🚩 | 🇩🇪 DE | ~£130 (£9/mo +VAT; **£1/mo × 3 promo**) | ~£288 (£20/mo) | Talk works (reported buggy) | **curated list, no arbitrary installs** — Collectives/Deck likely unavailable; Collabora a £2/mo add-on (reported flaky); **no `occ`** |
+| **TAB.DIGITAL** | EU-hosted; **ownership unclear** | low per-user (verify) | verify | ✅ HPB add-on | Collabora/ONLYOFFICE/Whiteboard/FTS; Deck/Collectives likely |
+| **Portknox** | 🇩🇪 DE, **EU-owned** | verify | verify | ask pre-sales | curated app list |
+| **AccuWeb.Cloud** ⚠️ | 🇺🇸 **US company** (EU data-centre option) | pay-as-you-go (usage; verify) | pay-as-you-go | ✅ likely (PaaS) | ✅ **full App Store** — but fails sovereignty |
 
-Prices need a VAT check (some are listed ex-VAT); IONOS ran a launch promo (25 users at £1/user/mo for 3 months).
+Prices need a VAT check (some are listed ex-VAT); IONOS runs a launch promo (**1 TB / 10-user tier at £1/mo for 3 months**, then £9/mo).
 
-**Gating verdict (ADR-0012's decision rule):** the differentiator is **Talk HPB group video at 20–30**. On current evidence — **Hetzner Storage Share can't** (no HPB), **IONOS is unconfirmed** (curated suite, most likely restricted), **TAB.DIGITAL clearly can** (HPB add-on) but is weakest on *ownership* sovereignty, and **The Good Cloud / Portknox** (both EU-owned) are the unknowns worth a direct pre-sales question. So ADR-0012's rule stands: **managed becomes the recommendation *if* a sovereign provider confirms HPB + Collectives + Deck at acceptable cost; otherwise DIY holds.**
+**Gating verdict — the gate moved.** Your **≤10-person calls with guest links** remove **HPB group video** as a requirement, so it no longer gates provider choice. The *new* gate is **app freedom** — can the managed plan install **Collectives (wiki) + Deck (tasks)** and run a working office suite? Those are required features, and managed plans vary sharply.
+
+**Reality check on IONOS** (Nextcloud community reports): its managed product allows **only a pre-approved app list — no arbitrary installs**, so **Collectives and Deck are likely unavailable** (two required features), **OnlyOffice can't be installed**, **Collabora is reported flaky**, there is **no `occ`**, and users report performance and outdated-version problems. Marketing says otherwise and the reports cite older versions, so treat IONOS as **unverified-but-risky** — a cheap thing to *test* (the £1 trial), not a confirmed launch platform.
+
+So the shortlist re-ranks toward **full-Nextcloud managed providers**: **The Good Cloud** (EU-owned, official Nextcloud partner → most likely full apps) and **Hetzner Storage Share** (trusted vendor; its only gap was HPB, now moot at ≤10). Updated rule: **managed wins *if* an EU-owned provider confirms Collectives + Deck + a working office at acceptable cost.**
 
 **On AccuWeb.Cloud (kept in at the org's request):** its pitch — *"private, decentralized, open-source… not just avoiding Big Tech"* — genuinely matches the **ethos** (open-source app, no Google/M365 lock-in, full app freedom, and its PaaS model most likely *can* run HPB, so it clears the app gate cleanly). But it is a **US company**, so US law reaches its data even in an EU data centre — the exact exposure the sovereignty *hard constraint* exists to avoid. It clears the **app** gate but not the **sovereignty** gate. Keep it as an option **only if the committee consciously relaxes the US-jurisdiction constraint** — a premise change worth recording as its own decision — not by mistaking EU data residency for sovereignty.
 
@@ -78,7 +82,7 @@ Prices need a VAT check (some are listed ex-VAT); IONOS ran a launch promo (25 u
 
 **Scale note:** at today's ~10 users, IONOS (~£108/yr) is **cheaper than the DIY server** (~£198/yr) *and* removes ops — managed is genuinely attractive *now*, and only loses its price edge nearer 25–30 users.
 
-**Recommendation:** **Netcup VPS 2000 G12, DIY** remains plan of record — but promote managed to *recommended* if a pre-sales check confirms HPB group video on an EU-owned provider (start with The Good Cloud and IONOS). Amends ADR-0005; **feeds real provider/pricing data into ADR-0012** (no longer just an unanswered checklist).
+**Recommendation:** **managed Nextcloud is the leaning launch path** (lowest bus factor at ≤10 users), **provider gated on an app-freedom check** — shortlist **The Good Cloud** and **Hetzner Storage Share** ahead of the flagged IONOS. **Netcup VPS 2000 G12 (DIY)** becomes the **DIY-on-trigger** target. Amends ADR-0005; **feeds real data into ADR-0012**.
 
 ---
 
@@ -272,5 +276,5 @@ Rule of thumb: **in-repo** for anything code-adjacent or that a second admin nee
 2. **Decide chat direction:** Talk-only for launch (recommended) vs a funded Element spike. → holds or supersedes ADR-0002.
 3. **Identify `sendersrv.com`** and inventory all `bafz.org` senders; design one combined SPF + DKIM set (Migadu + relay + Qomon). → amend ADR-0011.
 4. **Reconcile Proton Mail already being live** with the Migadu plan — migrate or retain? → ADR-0011 migration section.
-5. **Close the ADR-0012 gating question** with a pre-sales check to an EU-owned managed provider (The Good Cloud, IONOS, Portknox) on **Talk HPB group video + Deck + Collectives + app freedom**; if one confirms, managed likely wins at today's scale. If the org relaxes the US-jurisdiction constraint, record that separately before considering AccuWeb.
+5. **Run the £1 IONOS pilot as the app-freedom test** (can it install **Collectives + Deck**, run Collabora, and do a 10-person call with a guest?) — see the [pilot runbook](runbooks/managed-nextcloud-pilot.md). If IONOS fails, pivot to **The Good Cloud** / **Hetzner Storage Share** (30-day money-back caps the risk).
 6. **Stand up `docs/reference/`** with the high-priority registers before production data lands.
