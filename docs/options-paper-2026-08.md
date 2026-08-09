@@ -20,7 +20,7 @@
 7. **New records to keep:** service/vendor inventory, DNS zone register, GDPR RoPA + DPA register, access/offboarding register, incident/breach log. See [records to track](#records--registers-to-track).
 8. **If users climb to 50–100:** the maths *inverts* — DIY gets cheaper per head while managed gets pricey, **SSO becomes mandatory** (reopens ADR-0004), Matrix's scale case strengthens, and a solo volunteer admin becomes imprudent. The £250–300 ceiling retires. See *Scale scenario* below.
 
-**Managed Nextcloud is now the leaning launch path** (lowest bus factor at ≤10 users, near-zero ops), with **provider gated on an app-freedom check** — it must install **Collectives + Deck** and run a working office. Shortlist **The Good Cloud** and **Hetzner Storage Share**; **IONOS is flagged 🚩** (community reports: curated app list, likely no Collectives/Deck, no `occ`) — worth only the cheap £1 trial to test. **Netcup DIY** becomes the **on-trigger** target. **Cost headline:** Netcup restores the budget the Hetzner increase broke (~£270–290/yr all-in for the single-stack plan). Adding a *second* self-hosted stack (Element alongside Nextcloud) pushes past the £300 ceiling — that's a committee budget conversation, not an accident.
+**Managed Nextcloud is now the leaning launch path** (lowest bus factor at ≤10 users, near-zero ops), with **provider gated on an app-freedom check** — it must install **Collectives + Deck** and run a working office. Shortlist **The Good Cloud** and **Hetzner Storage Share**. **Update: the IONOS real-data pilot PASSED that gate — Deck + Collectives install** (older reports were stale) — though **Collabora is erroring** and T&C/DPA concerns remain, so The Good Cloud stays the values/backups front-runner. **Netcup DIY** becomes the **on-trigger** target. **Cost headline:** Netcup restores the budget the Hetzner increase broke (~£270–290/yr all-in for the single-stack plan). Adding a *second* self-hosted stack (Element alongside Nextcloud) pushes past the £300 ceiling — that's a committee budget conversation, not an accident.
 
 ---
 
@@ -63,7 +63,7 @@ One deliberate exception aside (AccuWeb, flagged below, kept in at the org's req
 |---|---|---|---|---|---|
 | **The Good Cloud** ⭐ | 🇳🇱 NL, **EU-owned** (Good Cloud B.V., Utrecht) | verify | verify | N/A at ≤10 | Nextcloud partner → **likely full apps incl. Collectives/Deck** |
 | **Hetzner Storage Share** ⭐ | 🇩🇪 DE (our trusted vendor) | ~£45–140 by storage | scales by storage/users | no HPB — **but not needed at ≤10** | full Nextcloud; can add apps — **verify Collectives/Deck** |
-| **IONOS Managed Nextcloud** 🚩 | 🇩🇪 DE | ~£130 (£9/mo +VAT; **£1/mo × 3 promo**) | ~£288 (£20/mo) | Talk works (reported buggy) | **curated list, no arbitrary installs** — Collectives/Deck likely unavailable; Collabora a £2/mo add-on (reported flaky); **no `occ`** |
+| **IONOS Managed Nextcloud** | 🇩🇪 DE | ~£130 (£9/mo +VAT; **£1/mo × 3 promo**) | ~£288 (£20/mo) | Talk installed (threads: verify version) | **pilot 2026-08: Deck + Collectives DID install** ✅; app store works; **Collabora erroring** (troubleshooting) ⚠️; **no `occ`** |
 | **TAB.DIGITAL** | EU-hosted; **ownership unclear** | low per-user (verify) | verify | ✅ HPB add-on | Collabora/ONLYOFFICE/Whiteboard/FTS; Deck/Collectives likely |
 | **Portknox** | 🇩🇪 DE, **EU-owned** | verify | verify | ask pre-sales | curated app list |
 | **AccuWeb.Cloud** ⚠️ | 🇺🇸 **US company** (EU data-centre option) | pay-as-you-go (usage; verify) | pay-as-you-go | ✅ likely (PaaS) | ✅ **full App Store** — but fails sovereignty |
@@ -74,6 +74,8 @@ Prices need a VAT check (some are listed ex-VAT); IONOS runs a launch promo (**1
 
 **Reality check on IONOS** (Nextcloud community reports): its managed product allows **only a pre-approved app list — no arbitrary installs**, so **Collectives and Deck are likely unavailable** (two required features), **OnlyOffice can't be installed**, **Collabora is reported flaky**, there is **no `occ`**, and users report performance and outdated-version problems. Marketing says otherwise and the reports cite older versions, so treat IONOS as **unverified-but-risky** — a cheap thing to *test* (the £1 trial), not a confirmed launch platform.
 
+**Pilot update (2026-08):** the real-data pilot **disproves the app-freedom fear** — **Deck and Collectives both install and run** (the older reports were stale), so IONOS is now a **legitimate contender**, not a throwaway. Remaining IONOS concerns are still under test: **Collabora/Office is erroring** (*"Failed to open Nextcloud Office"* — troubleshooting), **Talk threads** need a version check, plus performance, the T&C data-loss/backup posture, and the DPA/marketing-consent for real data. The Good Cloud still leads on values, backups, and clean export.
+
 So the shortlist re-ranks toward **full-Nextcloud managed providers**: **The Good Cloud** (EU-owned, official Nextcloud partner → most likely full apps) and **Hetzner Storage Share** (trusted vendor; its only gap was HPB, now moot at ≤10). Updated rule: **managed wins *if* an EU-owned provider confirms Collectives + Deck + a working office at acceptable cost.**
 
 **On AccuWeb.Cloud (kept in at the org's request):** its pitch — *"private, decentralized, open-source… not just avoiding Big Tech"* — genuinely matches the **ethos** (open-source app, no Google/M365 lock-in, full app freedom, and its PaaS model most likely *can* run HPB, so it clears the app gate cleanly). But it is a **US company**, so US law reaches its data even in an EU data centre — the exact exposure the sovereignty *hard constraint* exists to avoid. It clears the **app** gate but not the **sovereignty** gate. Keep it as an option **only if the committee consciously relaxes the US-jurisdiction constraint** — a premise change worth recording as its own decision — not by mistaking EU data residency for sovereignty.
@@ -82,7 +84,7 @@ So the shortlist re-ranks toward **full-Nextcloud managed providers**: **The Goo
 
 **Scale note:** at today's ~10 users, IONOS (~£108/yr) is **cheaper than the DIY server** (~£198/yr) *and* removes ops — managed is genuinely attractive *now*, and only loses its price edge nearer 25–30 users.
 
-**Recommendation:** **managed Nextcloud is the leaning launch path** (lowest bus factor at ≤10 users), **provider gated on an app-freedom check** — shortlist **The Good Cloud** and **Hetzner Storage Share** ahead of the flagged IONOS. **Netcup VPS 2000 G12 (DIY)** becomes the **DIY-on-trigger** target. Amends ADR-0005; **feeds real data into ADR-0012**.
+**Recommendation:** **managed Nextcloud is the leaning launch path** (lowest bus factor at ≤10 users), **provider gated on an app-freedom check** — shortlist **The Good Cloud** and **Hetzner Storage Share** ahead of IONOS — which **passed the app-freedom gate in the 2026-08 pilot** (Deck + Collectives install) but carries T&C/values concerns (Collabora erroring, data-loss liability disclaimed). **Netcup VPS 2000 G12 (DIY)** becomes the **DIY-on-trigger** target. Amends ADR-0005; **feeds real data into ADR-0012**.
 
 ---
 

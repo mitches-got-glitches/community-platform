@@ -64,6 +64,21 @@ Against Steps 2–6:
 - **Pass** → managed launch confirmed. Plan production: pick the final provider/tier, map `cloud.bafz.org`, do the real user onboarding (DOC-4/5), and sequence the Google/WhatsApp move (see `../pilot-plan.md`). Promote [ADR-0012](../architecture/0012-diy-vs-managed-nextcloud.md) to Accepted with the chosen provider.
 - **Fail** (esp. Collectives/Deck/Collabora/perf) → refund, and either pilot the next shortlist provider or fall back to the DIY-on-Netcup plan (Decision 1/2 of the options paper).
 
+## Pilot findings (2026-08) — running log
+| Check | Result |
+|---|---|
+| Domain | IONOS default hostname (`nc-…nextcloud-ionos.com`) — isolated from `bafz.org` ✅ |
+| Deck (tasks) installs | ✅ |
+| Collectives (wiki) installs | ✅ |
+| **App-freedom gate** | **PASSED** — contradicts the older community reports |
+| Collabora / Office | ⚠️ *"Failed to open… browser unable to connect"* to the IONOS-provisioned Collabora server — diagnosing (likely browser extension / warm-up) |
+| Talk threads | ⏳ supported since Hub 25 — verify the instance's version |
+| Users / Teams | in progress |
+| 10-person call + guest | ⏳ pending |
+| Performance | ⏳ pending |
+| Day-one backup sync | ⏳ pending |
+| DPA + declined marketing consent | ⏳ pending — **required before real member data** |
+
 ## Cost
 ~£1/mo × 3 + ~£2/mo Collabora ≈ **£9 for a 3-month pilot** (or less with the 30-day refund). Trivial next to what it de-risks.
 
