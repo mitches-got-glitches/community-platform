@@ -71,7 +71,7 @@ Against Steps 2–6:
 | Deck (tasks) installs | ✅ |
 | Collectives (wiki) installs | ✅ |
 | **App-freedom gate** | **PASSED** — contradicts the older community reports |
-| Collabora / Office | ⚠️ *"Failed to open… browser unable to connect"* to the IONOS-provisioned Collabora server — diagnosing (likely browser extension / warm-up) |
+| Collabora / Office | ✅ **works** — the "Failed to load" was a **Firefox / Privacy Badger** cross-domain block, *not* IONOS (works in Chrome, and in Firefox with Privacy Badger/tracking-protection off for the site). ⚠️ **Onboarding note (DOC-5):** members must allow the Collabora domain / disable tracking protection for the Nextcloud site, or documents won't open. |
 | Talk threads (**required feature**) | ❌ **not available** — instance runs **Talk 21.1 / Nextcloud 31**; threads need **Talk 22 / Nextcloud 32 (Hub 25)**, and on managed we **can't self-upgrade** (IONOS controls the version). A required-feature gap we can't fix. |
 | Users / Teams | in progress |
 | 10-person call + guest | ⏳ pending |
