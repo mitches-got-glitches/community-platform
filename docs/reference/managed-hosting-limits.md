@@ -18,6 +18,8 @@ This is the evidence base for **exit trigger (1)** in [ADR-0012](../architecture
 | **No clean export** | migration off is per-app (files via sync copy, calendars `.ics`, contacts `.vcf`, Deck JSON, Collectives markdown) and **Talk history is sacrificed** | day-one own-copy sync as migration insurance ([ADR-0006](../architecture/0006-backups-and-disaster-recovery.md)) | 2026-08 |
 | **No SLA / uptime guarantee; data-loss liability disclaimed** | backups are entirely our responsibility despite not running the box | own-copy sync — mandatory, not optional | 2026-08 |
 
+**Mitigating, on the version lag (2026-09-22):** the instance reports `hasValidSubscription: true` and `desktopEnterpriseChannel: "enterprise"` — IONOS runs this under a **Nextcloud Enterprise subscription**. Enterprise branches receive backported security fixes, so running NC 32 a year after release is likely *maintained*, not abandoned — which substantially answers the security-maintenance question above. It also explains the conservative upgrade cadence: enterprise customers are sold stability, not currency. **Still worth confirming with the provider directly** rather than inferring from a capabilities flag.
+
 ## What the OCS REST API covers instead
 
 Reachable over HTTPS with an app password, so it survives the absence of `occ` — this is what keeps the [code-first constraint](../architecture/0012-diy-vs-managed-nextcloud.md) partially alive on managed hosting.
@@ -31,7 +33,7 @@ Reachable over HTTPS with an app password, so it survives the absence of `occ` �
 | Files | WebDAV — `/remote.php/dav/files/<user>/` |
 | Calendar / contacts | CalDAV / CardDAV |
 
-**TODO:** confirm IONOS does not restrict API access — untested as of 2026-09-22.
+**Confirmed working 2026-09-22.** IONOS does **not** restrict API access. Verified end-to-end against the live instance with an app password: read capabilities, list/create Collectives pages, write page content over WebDAV, create a Deck board with lists and cards, and query the provisioning and Circles APIs — all authenticated and successful. The member wiki, the admin wiki and the first Deck board were all built this way. **This is the single biggest mitigation for the `occ` gap:** the control plane is scriptable, so user provisioning, wiki structure and task boards stay reproducible rather than click-ops.
 
 **Not covered by the API**, and therefore provider-ticket-only: maintenance mode, app upgrades, `config.php`, file rescans, server logs, and push diagnostics.
 
