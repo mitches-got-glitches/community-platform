@@ -28,7 +28,7 @@ In every case: **never** change `bafz.org` nameservers or apex `MX`/`SPF`/`DMARC
 2. Add the **Collabora "Nextcloud Office" add-on** (~£2/mo) so office editing is testable.
 3. Record the admin login, URL, and billing/renewal date in the **BAFZ Vault** (Proton Pass, [ADR-0007](../architecture/0007-secrets-management.md)) and note the **30-day refund deadline**.
 
-> **IONOS terms to note (GTC, before real data):** the cheap exit is the **30-day money-back window**, *not* the 3-month promo — after 30 days you enter a **12-month minimum term** (auto-renews; cancel ≥1 working day before renewal, so diary it). **Backups are explicitly your responsibility** and IONOS disclaims liability for data loss (*"in no circumstances… liable to recover Your data,"* liability capped at ~12 months' fees) — so the day-one own-copy sync is essential, not optional. **No SLA/uptime guarantee**; IONOS may terminate on **30 days' notice**; and **no guaranteed data export/retrieval on exit**. Obtain and review the **separate DPA** before loading member data. These are standard cheap-managed terms but a poor fit for "the org's resilient home" — [The Good Cloud](https://thegood.cloud/) likely offers better (managed backups included); compare its terms.
+> **IONOS terms to note (GTC, before real data):** ~~after 30 days you enter a **12-month minimum term**~~ — **corrected 2026-09-22: this contract is rolling monthly.** The GTC's 12-month default reads *"**Unless otherwise specified**, Services are provided for a minimum contract term of 12 months"*, and our contract page **does** otherwise specify: **Contract term: 1 month**. So we are **not** locked in — we can leave at any month boundary, giving **≥1 working day's notice before the renewal date** (GTC Clause 4). The 30-day money-back window (closed ~2026-09-07) was the *refund* route, not the only *exit* route. **Backups are explicitly your responsibility** and IONOS disclaims liability for data loss (*"in no circumstances… liable to recover Your data,"* liability capped at ~12 months' fees) — so the day-one own-copy sync is essential, not optional. **No SLA/uptime guarantee**; IONOS may terminate on **30 days' notice**; and **no guaranteed data export/retrieval on exit**. Obtain and review the **separate DPA** before loading member data. These are standard cheap-managed terms but a poor fit for "the org's resilient home" — [The Good Cloud](https://thegood.cloud/) likely offers better (managed backups included); compare its terms.
 
 ## Step 2 — The app-freedom gate (make-or-break — do this first)
 Before investing any effort, log in as admin and **try to install [Collectives](https://apps.nextcloud.com/apps/collectives) (wiki) and [Deck](https://apps.nextcloud.com/apps/deck) (tasks)** from the app store.
@@ -78,6 +78,20 @@ Against Steps 2–6:
 | Performance | ⏳ pending |
 | Day-one backup sync | ⏳ pending |
 | DPA + declined marketing consent | ⏳ pending — **required before real member data** |
+
+## Contract dates (recorded 2026-09-22)
+| Item | Contract | Active since | Renews on |
+|---|---|---|---|
+| IONOS Managed Nextcloud 1 TB | 300256038 | 2026-08-08 (Sat) | **2026-10-07 (Wed)** |
+| IONOS Collabora Online — 5 Users (add-on) | 300256038 | 2026-08-08 (Sat) | **2026-10-08 (Thu)** |
+
+- **The 30-day money-back window closed ~2026-09-07** — the cheap exit is gone; any exit from here is a cancellation, not a refund.
+- **Decision deadline: end of Mon 2026-10-05** (cancellation needs ≥1 working day before the 7 Oct renewal). Diary it.
+- **Cancel *both* lines if exiting** — the Collabora add-on renews a day later (8 Oct) and would otherwise continue.
+- **Confirmed rolling monthly (2026-09-22).** The contract change page states **"Contract term: 1 month"** and **"Contract term until 08/10/2026"**. This overrides the GTC's *"unless otherwise specified… 12 months"* default ([IONOS GTC](https://www.ionos.co.uk/terms-gtc/terms-and-conditions/) Clause 3), so **there is no 12-month lock-in** — the earlier reading of the GTC was wrong.
+- **Notice required:** *"You are entitled to cancel the Services by contacting Us no less than **1 working day prior to the renewal date**"* (GTC Clause 4). With renewal on Wed 7 Oct, the hard deadline is **Tue 6 Oct**; act by **Mon 5 Oct** for buffer.
+- **Still to check:** the change page quotes **£9/month**, not the £1 promo rate — confirm on the current invoice whether the **£1/mo × 3 promo is still running** or has already converted.
+- **Upshot:** exit is now cheap and repeatable every month, so the provider decision is **no longer time-boxed by lock-in**. It can be made on the merits (T&Cs, export, values) rather than against a contract deadline.
 
 ## Cost
 ~£1/mo × 3 + ~£2/mo Collabora ≈ **£9 for a 3-month pilot** (or less with the 30-day refund). Trivial next to what it de-risks.
