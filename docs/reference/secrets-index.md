@@ -4,7 +4,8 @@ An **index of what should live in the BAFZ Vault** (Proton Pass Family, [ADR-000
 
 | Item | Purpose | Present? |
 |---|---|---|
-| Nextcloud provider admin login | manage the managed instance (IONOS pilot → prod) | TODO |
+| Nextcloud provider admin login | manage the managed instance (IONOS pilot → prod) | ✅ present — **includes the instance URL** |
+| Nextcloud app password ("Claude Nextcloud App") | scripted administration over the OCS API without `occ` | ✅ present (2026-09-22) — revocable from Settings → Security |
 | Domain registrar credentials | control `bafz.org` | **TODO — org doesn't control the domain yet (R-29)** |
 | Migadu account + mailbox app-passwords | `@bafz.org` mail | TODO (planned) |
 | Qomon login | outreach CRM | TODO |
@@ -16,4 +17,6 @@ An **index of what should live in the BAFZ Vault** (Proton Pass Family, [ADR-000
 | VPS root / SSH key | server access | TODO (on-trigger) |
 | BorgBase login **+ Borg key/passphrase** | off-site backup — **unrecoverable without the key (R-05)** | TODO (on-trigger) |
 
-**Rule:** every credential the org would need to recover the stack lives here, added the moment the account is created — not retrofitted. On the managed path the **day-one own-copy sync** location/credentials also belong here (it is our only backup — R-25).
+**Rule:** every credential the org would need to recover the stack lives here, added the moment the account is created — not retrofitted.
+
+**Also record the URL.** A username and password with no address is not recoverable — a second admin needs to know *what* the credential unlocks, not just how to unlock it. Every item gets the login URL alongside the secret. On the managed path the **day-one own-copy sync** location/credentials also belong here (it is our only backup — R-25).
