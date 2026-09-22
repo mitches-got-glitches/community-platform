@@ -72,7 +72,7 @@ Against Steps 2–6:
 | Collectives (wiki) installs | ✅ |
 | **App-freedom gate** | **PASSED** — contradicts the older community reports |
 | Collabora / Office | ✅ **works** — the "Failed to load" was a **Firefox / Privacy Badger** cross-domain block, *not* IONOS (works in Chrome, and in Firefox with Privacy Badger/tracking-protection off for the site). ⚠️ **Onboarding note (DOC-5):** members must allow the Collabora domain / disable tracking protection for the Nextcloud site, or documents won't open. |
-| Talk threads (**required feature**) | ❌ **not available** — instance runs **Talk 21.1 / Nextcloud 31**; threads need **Talk 22 / Nextcloud 32 (Hub 25)**, and on managed we **can't self-upgrade** (IONOS controls the version). A required-feature gap we can't fix. |
+| Talk threads (**required feature**) | ✅ **available (re-checked 2026-09-22)** — IONOS moved the instance to **Nextcloud 32 / Hub 25 ("Autumn 25")**, bumping **Talk to v22**, and **threads are enabled**. Supersedes the 2026-08 finding (then on Talk 21.1 / NC 31). **The last required-feature gap on IONOS is closed.** Residual: **the ~1-year lag is real** — Hub 25 "Autumn" shipped upstream in **September 2025**, so IONOS runs roughly **12 months behind**, and upgrade timing is theirs, not ours. **Accepted (2026-09-22):** a ~1-year lag is tolerable *now that every required app is present*; the standing implication is that any **future** required feature should be assumed **~12 months away**, and we plan around that rather than against it. |
 | Users / Teams | in progress |
 | 10-person call + guest | ⏳ pending |
 | Performance | ⏳ pending |
@@ -94,4 +94,4 @@ If IONOS fails the app-freedom gate (or on values/T&C grounds), [The Good Cloud]
 8. **SLA / continuity:** uptime commitment, support hours, and company size/track record (it is a small B.V. — [R-18](../risks.md)).
 9. **Trial:** an Organisation trial, or can we smoke-test on the free 6-month **Consumer** trial (noting its app set may differ from Organisation)?
 10. **Custom domain:** can we use **`cloud.bafz.org`** and keep mail (MX) on Proton/Migadu — i.e. **subdomain only, no nameserver takeover**?
-11. **Version cadence:** which **Nextcloud / Talk version** do they run today, and how quickly after upstream release do they upgrade? (Threads — a required chat feature — need **Talk 22 / Nextcloud 32 / Hub 25**; the IONOS pilot is stuck on Talk 21 with no self-upgrade.)
+11. **Version cadence:** which **Nextcloud / Talk version** do they run today, and how quickly after upstream release do they upgrade? (Threads — a required chat feature — need **Talk 22 / Nextcloud 32 / Hub 25**. IONOS runs **~12 months behind upstream** — tolerable for us, but ask The Good Cloud for their actual lag, since a shorter one is a real advantage. **Also ask: is the version you run still receiving upstream security maintenance, and what is its EOL date?** A year-behind major version is fine; an out-of-support one is not.)
