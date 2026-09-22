@@ -4,7 +4,7 @@ Every service the org depends on: what it does, who runs it (and where), what it
 
 | Service | Purpose | Vendor / jurisdiction | ~Cost/yr | Renewal | Owner | Creds | DPA | Status |
 |---|---|---|---|---|---|---|---|---|
-| Collaboration (Nextcloud) | files, wiki, tasks, calendar, chat | **IONOS** (🇩🇪) — pilot; likely **The Good Cloud** (🇳🇱) for prod | £1/mo→£9/mo (pilot) | 30-day refund; then 12-mo term | admin | Vault | **TODO — before real data** (R-26) | **real-data soft-launch pilot** ([ADR-0012](../architecture/0012-diy-vs-managed-nextcloud.md)) |
+| Collaboration (Nextcloud) | files, wiki, tasks, calendar, chat | **IONOS** (🇩🇪) — pilot; likely **The Good Cloud** (🇳🇱) for prod | £1/mo→£9/mo (pilot) | **rolling monthly** — renews 7 Oct 2026 (Collabora add-on 8 Oct); cancel ≥1 working day before | admin | Vault | **TODO — before real data** (R-26) | **real-data soft-launch pilot** ([ADR-0012](../architecture/0012-diy-vs-managed-nextcloud.md)) |
 | Secrets vault | "BAFZ Vault" — org credentials | **Proton Pass Family** (🇨🇭) | £38–47 | TODO | admin | — (is the vault) | n/a | in use (2026-07-26) ([ADR-0007](../architecture/0007-secrets-management.md)) |
 | Email mailboxes | `@bafz.org` human mail | **Migadu** (🇨🇭) | £15–70 (Mini likely) | TODO | admin | Vault | TODO | planned; migrating from live Proton ([ADR-0011](../architecture/0011-custom-domain-email-via-migadu.md)) |
 | Outreach CRM | member/supporter CRM, canvassing, mass email | **Qomon** (🇫🇷) | existing | TODO | admin | Vault | **TODO** (R-28) | in use |
