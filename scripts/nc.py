@@ -8,6 +8,7 @@ line, where /proc/<pid>/cmdline would expose it to any user on the machine.
 """
 import base64
 import json
+import re
 import os
 import sys
 import urllib.error
@@ -146,6 +147,36 @@ def cmd_wiki_todo(nc, _):
     return 0
 
 
+def collective_urls(nc):
+    """Every valid internal page URL: slug *and* id on each segment, as Collectives routes them."""
+    base = "/ocs/v2.php/apps/collectives/api/v1.0/collectives"
+    valid = set()
+    for c in nc.ocs(base)["ocs"]["data"]["collectives"]:
+        pages = {p["id"]: p for p in nc.ocs(f"{base}/{c['id']}/pages")["ocs"]["data"]["pages"]}
+        root = f"/apps/collectives/{c['slug']}-{c['id']}"
+        for p in pages.values():
+            chain = []
+            while p.get("parentId"):  # the landing page has parentId 0
+                chain.append(f"{p['slug']}-{p['id']}")
+                p = pages[p["parentId"]]
+            valid.add(root + ("/" + "/".join(reversed(chain)) if chain else ""))
+    return valid
+
+
+def cmd_wiki_links(nc, _):
+    valid = collective_urls(nc)
+    checked = broken = 0
+    for collective, page, text in walk_wiki(nc):
+        for target in re.findall(r"\]\((/apps/collectives/[^)#\s]*)", text):
+            checked += 1
+            if target.rstrip("/") not in valid:
+                broken += 1
+                print(f"  ✗  {collective}/{page}  →  {target}")
+    print(f"{checked} internal link(s) checked, {broken} broken" if broken
+          else f"✅ {checked} internal link(s) checked, none broken")
+    return 1 if broken else 0
+
+
 def cmd_deck_card(nc, args):
     if len(args) < 2:
         sys.exit("usage: deck-card <board> <card>")
@@ -175,7 +206,7 @@ def cmd_deck_card(nc, args):
 
 COMMANDS = {"check": cmd_check, "users": cmd_users, "user-add": cmd_user_add,
             "wiki-export": cmd_wiki_export, "wiki-todo": cmd_wiki_todo,
-            "deck-card": cmd_deck_card}
+            "wiki-links": cmd_wiki_links, "deck-card": cmd_deck_card}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:

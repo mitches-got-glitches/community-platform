@@ -44,6 +44,10 @@ nc-wiki-export dir="wiki-export":
 nc-wiki-todo:
     {{nc_env}} pass-cli run -- python3 scripts/nc.py wiki-todo
 
+# Check every internal wiki link resolves to a live page — run after any wiki edit
+nc-wiki-links:
+    {{nc_env}} pass-cli run -- python3 scripts/nc.py wiki-links
+
 # Show a Deck card — stack, labels, assignees, checklist progress and description
 nc-deck-card board card:
     {{nc_env}} pass-cli run -- python3 scripts/nc.py deck-card {{board}} {{card}}
