@@ -44,6 +44,10 @@ nc-wiki-export dir="wiki-export":
 nc-wiki-todo:
     {{nc_env}} pass-cli run -- python3 scripts/nc.py wiki-todo
 
+# Show a Deck card — stack, labels, assignees, checklist progress and description
+nc-deck-card board card:
+    {{nc_env}} pass-cli run -- python3 scripts/nc.py deck-card {{board}} {{card}}
+
 # Dry-run the Ansible playbook against the production inventory (see ansible/README.md)
 ansible-check:
     cd ansible && uv run ansible-playbook site.yml --check

@@ -46,6 +46,11 @@ class NC:
             raw = r.read()
         return json.loads(raw) if raw else None
 
+    def deck(self, path):
+        extra = {"OCS-APIRequest": "true", "Accept": "application/json"}
+        with self._open("/index.php/apps/deck/api/v1.0" + path, extra=extra) as r:
+            return json.load(r)
+
     def dav_list(self, path):
         """Immediate children of a WebDAV collection: (href, is_dir)."""
         body = ('<?xml version="1.0"?><d:propfind xmlns:d="DAV:"><d:prop>'
@@ -141,8 +146,36 @@ def cmd_wiki_todo(nc, _):
     return 0
 
 
+def cmd_deck_card(nc, args):
+    if len(args) < 2:
+        sys.exit("usage: deck-card <board> <card>")
+    board, card = int(args[0]), int(args[1])
+    for stack in nc.deck(f"/boards/{board}/stacks"):
+        for c in stack.get("cards") or []:
+            if c["id"] != card:
+                continue
+            desc = c.get("description") or ""
+            done = desc.count("- [x]") + desc.count("- [X]")
+            total = done + desc.count("- [ ]")
+            print(f"{c['title']}  [{stack['title']}]")
+            if c.get("duedate"):
+                print(f"   due: {c['duedate'][:10]}")
+            labels = ", ".join(l["title"] for l in c.get("labels") or [])
+            people = ", ".join(a["participant"]["displayname"] for a in c.get("assignedUsers") or [])
+            if labels:
+                print(f"   labels: {labels}")
+            if people:
+                print(f"   assigned: {people}")
+            if total:
+                print(f"   checklist: {done}/{total} done")
+            print("\n" + desc)
+            return 0
+    sys.exit(f"card {card} not found on board {board} (archived cards aren't listed)")
+
+
 COMMANDS = {"check": cmd_check, "users": cmd_users, "user-add": cmd_user_add,
-            "wiki-export": cmd_wiki_export, "wiki-todo": cmd_wiki_todo}
+            "wiki-export": cmd_wiki_export, "wiki-todo": cmd_wiki_todo,
+            "deck-card": cmd_deck_card}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:
