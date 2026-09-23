@@ -56,6 +56,28 @@ and why GOV-4 gates go-live. If only five things are ever done, do those.
 
 ---
 
+## 2026-08 reassessment — managed-launch pivot (pending pilot)
+The stack direction shifted materially (see [`options-paper-2026-08.md`](options-paper-2026-08.md)): **Hetzner ARM is unavailable and pricier**, so DIY hosting moves to **Netcup** (on-trigger); **managed Nextcloud is the leaning launch path** (IONOS real-data pilot → likely **The Good Cloud**); **video is decoupled** to Talk-≤10 / Jitsi; and **branch email** goes to Migadu. A full re-score follows once the provider is chosen — key deltas now:
+
+**Eased by a managed launch**
+- **R-01 / R-02 / R-21** (bus factor, no 2nd admin, burnout): the provider becomes operational continuity (patches, upgrades, infra), so a solo launch is far less fragile and the 2nd-admin deadline is less acute — [ADR-0012](architecture/0012-diy-vs-managed-nextcloud.md), [ADR-0009](architecture/0009-bus-factor-and-second-admin.md).
+- **R-11 / R-17** (ARM images, AIO upgrade breakage): moot on managed; relevant only to the DIY-on-trigger path.
+
+**New or elevated**
+- **R-24 (new) 🟠 — managed lock-in / no clean export.** IONOS gives no export/DB/`occ`; migrating real data off is lossy. *Mitigate:* day-one own-copy sync ([ADR-0006](architecture/0006-backups-and-disaster-recovery.md)); prefer a full-Nextcloud provider (The Good Cloud) with proper export.
+- **R-25 (new) 🟠 — provider excludes data-loss liability; backup is the customer's job.** IONOS T&Cs cap liability at ~12 months' fees and *"in no circumstances… liable to recover Your data."* Even on managed, our own copy is the sole protection — folds into R-03/R-04.
+- **R-26 (new) 🟠 — managed-provider GDPR/processor misuse.** IONOS marketing consent / ad use of data; without a **processor-only DPA** (member-data carve-out, EU storage) we breach controller duties. *Gate:* signed DPA **before** real member data. (relates R-15)
+- **R-27 (new) 🟠 — multi-sender email deliverability + Proton→Migadu cutover.** `bafz.org` will carry Migadu + Qomon + relay (+ live Proton); the SPF 10-lookup limit and the MX cutover can break mail. *Mitigate:* one combined SPF, staged migration with rollback — [ADR-0011](architecture/0011-custom-domain-email-via-migadu.md), issue #58.
+- **R-28 (new) 🟡 — Qomon dependency.** Member/supporter PII sits in Qomon (SaaS, and a `bafz.org` sender); needs a DPA and a continuity/export note.
+- **R-29 (new) 🟠 — the org does not control its own primary domain (`bafz.org`).** A single external admin holds it, so the org's whole identity (email, web, Nextcloud URL) depends on their availability/goodwill — a bus-factor risk *beneath* the stack. *Mitigate:* obtain org control (registrar account in the org's name, creds in the vault, auto-renew) before production; short-term the pilot needs only one DNS record added, or uses an IONOS default hostname / dedicated domain. (relates R-23, R-18)
+- **R-18 (elevated → 🟠) — vendor continuity.** Now spans the managed provider (IONOS can terminate on 30 days, no SLA; The Good Cloud is a small B.V.) plus Migadu and Qomon. Portability + own-copy remain the mitigation.
+- **R-15 (elevated → 🟠) — UK GDPR.** Real member data now spans managed Nextcloud + Migadu + Qomon; the **RoPA + DPA register + access/deletion process** (records-to-track, options paper) move from nice-to-have to **required**.
+- **Sovereignty constraint consciously relaxed:** managed softens *"infra we control"* to *"an EU vendor controls the box under our account,"* and drops code-first IaC for the launch period — accepted on record ([ADR-0012](architecture/0012-diy-vs-managed-nextcloud.md)).
+
+**⚠️ The cost table below is stale** — it assumes Hetzner CAX31 (unavailable/pricier post-June-2026) and DIY. Re-baseline against the options-paper cost scenarios (managed ~£108–130/yr at ≤10 users; Migadu likely **Mini ~£70**, not Micro) once the provider is chosen.
+
+---
+
 ## Cost estimates (the original budget understated this)
 
 The early £100–150/yr was unachievable; the working plan said ~£160–180/yr, but that figure
