@@ -1,1 +1,4 @@
 .claude/settings.local.json
+
+# Wiki export — member content, never commit (public repo)
+wiki-export/
