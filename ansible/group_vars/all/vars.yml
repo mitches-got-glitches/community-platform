@@ -1,0 +1,4 @@
+---
+# Shared, non-secret configuration for every host. Secret-shaped variables never
+# live here — see secrets.yml and ../../README.md for the Proton Pass pattern.
+timezone: Europe/London

@@ -79,7 +79,8 @@ Install these on your own machine. None are exotic; most are one package each.
 |------|--------------------|--------------------------|
 | **`ssh`** + your SSH key | Get onto the box. Key-only — password auth is disabled. | preinstalled |
 | **`git`** | Clone the IaC repo (playbook + docs). | `brew install git` / `apt install git` |
-| **Ansible** | Run the playbook: build a fresh host, re-apply config, host hardening. | `brew install ansible` / `apt install ansible` |
+| **`uv`** | Manages a pinned `ansible-core` install from `ansible/pyproject.toml` — reproducible version, no OS-package drift. | `brew install uv` / `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
+| **Ansible** | Run the playbook: build a fresh host, re-apply config, host hardening. Installed via `uv` (see `ansible/README.md`) — invoke as `uv run ansible-playbook ...` from `ansible/`, or `just ansible-check`/`just ansible-apply` from the repo root. | (via `uv`, not a system package — see `ansible/README.md`) |
 | **Proton Pass** (app or browser ext) | Unlock the infra vault. | [proton.me/pass](https://proton.me/pass) |
 | **`docker` / `docker compose`** | Inspect AIO containers on the box and run `occ`. Used *on the VPS*, not locally. | already on the box |
 | **`borg`** (BorgBackup) | Inspect/restore archives, and the quarterly cold export. | `brew install borgbackup` / `apt install borgbackup` |
@@ -105,8 +106,9 @@ not written into this repo.
 
 ## Routine operations
 
-- **Run / re-apply the host config:** `ansible-playbook` against the inventory (see the repo
-  README). Idempotent — safe to re-run; it reconciles the box to what's in git.
+- **Run / re-apply the host config:** `just ansible-check` (dry run) / `just ansible-apply`
+  from the repo root — see [`ansible/README.md`](ansible/README.md). Idempotent — safe to
+  re-run; it reconciles the box to what's in git.
 - **Nextcloud admin tasks** (`occ`): exec into the Nextcloud container on the box, e.g.
   `docker exec -it nextcloud-aio-nextcloud occ <command>`.
 - **Upgrades:** done from the **AIO admin UI** ("Stop containers" → "Update"). AIO sequences

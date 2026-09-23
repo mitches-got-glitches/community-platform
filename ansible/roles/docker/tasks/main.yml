@@ -1,0 +1,6 @@
+---
+# Placeholder. Will install Docker Engine + the Compose plugin that Nextcloud AIO runs
+# on (ADR-0001). Structure only for now — see #12 (INFRA-3) and Epic A (#1).
+- name: Placeholder — docker role not yet implemented
+  ansible.builtin.debug:
+    msg: "docker role: nothing to do yet"

@@ -1,0 +1,6 @@
+---
+# Placeholder. Will drop the AIO docker-compose.yml + .env and start the mastercontainer
+# (ADR-0001). Structure only for now — see #12 (INFRA-3) and Epic A (#1).
+- name: Placeholder — nextcloud_aio role not yet implemented
+  ansible.builtin.debug:
+    msg: "nextcloud_aio role: nothing to do yet"
